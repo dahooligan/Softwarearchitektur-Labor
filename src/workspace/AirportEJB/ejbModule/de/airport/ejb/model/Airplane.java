@@ -11,6 +11,8 @@ public class Airplane {
 	private StartingDirection startingdirection;
 	private Runway runway;
 	private ParkingPosition parkingPosition;
+	
+	private AirplaneState state;
 
 	public Airplane(String name) {
 		super();
