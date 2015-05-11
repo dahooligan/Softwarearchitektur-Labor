@@ -18,16 +18,14 @@ public class AirportFacade {
 	private EntityManager em;
 
 	public void createAirplane(String name) { 
-		Airplane airplane = new Airplane();
-		airplane.setName(name);
+		Airplane airplane = new Airplane(name);
 		em.persist(airplane);
 	}
 	
 	public void createAirline(String name, String street, String city) {
-		Airline airline = new Airline();
-		airline.setName(name);
-		airline.setStreet(street);
-		airline.setCity(city);
+		Airline airline = new Airline(name);
+		airline.setStreetName(street);
+		airline.setCityName(city);
 		em.persist(airline);	}
 
 	public List<Airplane> getAirplanes() {
