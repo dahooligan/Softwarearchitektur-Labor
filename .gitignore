@@ -19,9 +19,12 @@ hs_err_pid*
 *.class
 
 # eclipse specific git ignore
+
+src/workspace/AirportEJB/build/classes/de/airport/ejb/model/Airplane.class
+
 *.pydevproject
 */.project/*
-src/workspace/.metadata/*
+*metadata*
 bin/**
 tmp/**
 tmp/**/*
