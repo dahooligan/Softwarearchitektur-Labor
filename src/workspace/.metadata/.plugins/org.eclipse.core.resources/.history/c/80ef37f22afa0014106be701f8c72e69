@@ -1,0 +1,5 @@
+body {
+	wight: 900px; 
+	margin-left: auto;
+	margin-right: auto;		
+}

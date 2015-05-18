@@ -1,0 +1,71 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+	<h:outputStylesheet name ="css/main.css"/>
+	
+		<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=9" />
+		</f:facet>
+	</h:head>
+	
+	<h:body>
+	<header></header>
+		<ui:insert name="content" />
+		<style type="text/css">
+html{
+	max-width: 1024px;
+	margin-left:auto;
+	margin-right:auto;
+	height:100%;
+	background-color:white;
+}
+.leisteObenOuttext{
+	padding: 10px;
+	border-right: 1px solid black;
+}
+.ui-tabs-vertical{
+	width:400px; 
+	hight:500px;
+}
+.EastContent{
+	top: 34px;
+    
+}
+.ui-layout-east{
+ top:34px;
+}
+#j_idt18{
+top:34px;
+}
+.ui-layout-unit .ui-layout-unit-content {
+    padding: 0.2em 0em;
+    border: 0px none;
+    overflow: hidden; 
+}
+.ui-tabs.ui-tabs-right > .ui-tabs-nav {
+    float: right;
+    width: 23%;
+   	height: 300px;
+    background-image: none;
+    padding-top: 1px;
+    -webkit-transform: rotate(90deg);
+ 	-moz-transform: rotate(90deg);
+ 	-o-transform: rotate(90deg);
+
+}
+/* this will affect the fonts of all PrimeFaces components */
+.ui-widget {
+  font-family: Rockwell, 'Courier Bold', Courier, Georgia, Times, 'Times New Roman', serif;
+  font-size: 12px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  line-height: 20px;               
+ }              
+	</style>
+	</h:body>
+</html>

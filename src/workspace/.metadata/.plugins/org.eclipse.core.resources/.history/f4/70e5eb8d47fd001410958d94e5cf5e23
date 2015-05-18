@@ -1,0 +1,74 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+	<h:outputStylesheet name ="css/main.css"/>
+	
+		<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=9" />
+		</f:facet>
+	</h:head>
+	
+	<h:body>
+	<header></header>
+		<ui:insert name="content" />
+		<style type="text/css">
+html{
+	max-width: 1024px;
+	margin-left:auto;
+	margin-right:auto;
+	height:100%;
+	background-color:white;
+}
+.leisteObenOuttext{
+	padding: 10px;
+	border-right: 1px solid black;
+}
+.ui-tabs-vertical{
+	width:400px; 
+	hight:500px;
+}
+.EastContent{
+	width: 408px;
+    border: none;
+    position: absolute;
+    margin: 0px;
+    left: auto;
+    right: 0px;
+    top: 34px;
+    bottom: 39px;
+    height: 468px;
+    z-index: 0;
+    display: block;
+    visibility: visible;
+}
+element.style {
+    width: 408px;
+    border: none;
+    position: absolute;
+    margin: 0px;
+    left: auto;
+    right: 0px;
+    top: 34px;
+    bottom: 39px;
+    height: 468px;
+    z-index: 0;
+    display: block;
+    visibility: visible;
+}
+
+/* this will affect the fonts of all PrimeFaces components */
+.ui-widget {
+  font-family: Rockwell, 'Courier Bold', Courier, Georgia, Times, 'Times New Roman', serif;
+  font-size: 12px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  line-height: 20px;               
+ }              
+	</style>
+	</h:body>
+</html>
