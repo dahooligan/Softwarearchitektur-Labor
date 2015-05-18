@@ -1,6 +1,8 @@
 package de.airport.ejb.model;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
+
 
 @javax.persistence.Entity (name="airline")
 public class Airline {
@@ -8,35 +10,55 @@ public class Airline {
     @javax.persistence.Id
     @javax.persistence.GeneratedValue
 	private int id;
-	
-	private String name;
-	private String street;
-	private String city;
-	/*private List<Airplane> airplanes;
-	
-	public List<Airplane> getAirplanes() {
-		return airplanes;
+	private final String name;
+	private final Collection<Airplane> aircraftCollection;
+	private String cityName;
+	private String streetName;
+
+	public Airline(String name) {
+		super();
+		this.name = name;
+		this.aircraftCollection = new ArrayList<Airplane>();
 	}
-	public void setAirplanes(List<Airplane> airplanes) {
-		this.airplanes = airplanes;
-	} */
+
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
+
+	public String getStreetName() {
+		return streetName;
+	}
+
+	public void setStreetName(String streetName) {
+		this.streetName = streetName;
+	}
+
+	public int getId() {
+		return id;
+	}
+
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
-		this.name = name;
+
+	/**
+	 * Add an {@link Aircraft} to this {@link Airline}
+	 * 
+	 * @param aircraft
+	 *            the aircraft to add to the {@link Collection} of aircrafts of
+	 *            this {@link Airline}
+	 * @return @see {@link Collection#add(Object))
+	 */
+	public boolean addAircraft(Airplane airplane) {
+		return aircraftCollection.add(airplane);
 	}
-	public String getStreet() {
-		return street;
-	}
-	public void setStreet(String street) {
-		this.street = street;
-	}
-	public String getCity() {
-		return city;
-	}
-	public void setCity(String city) {
-		this.city = city;
-	}
-	
+
+    
+    
+    
+    
 }
