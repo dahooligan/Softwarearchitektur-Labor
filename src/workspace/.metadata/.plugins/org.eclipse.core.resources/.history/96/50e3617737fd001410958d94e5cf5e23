@@ -1,0 +1,85 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="templates/default.xhtml">
+
+	<ui:define name="content">
+
+		<p:layout style="min-width:600px;min-height:500px; height: 500px;">
+			<p:layoutUnit position="north" style="height: 3em;">
+				<h:outputText class="leisteObenOuttext"
+					value="Angemeldet als: Max Mustermann" />
+				<h:outputText class="leisteObenOuttext" value="Berechtigung Lotze" />
+				<h:outputText class="leisteObenOuttext"
+					value="Sitzungsbeginn: 14.05.2015, 12:00:00" />
+				<h:outputText class="leisteObenOuttext"
+					value="Aktuelle Zeit: 15.05.2015, 15:00:00" />
+			</p:layoutUnit>
+			<p:layoutUnit position="west" resizable="true" size="auto">
+				<p:graphicImage
+					value="http://www.itopnews.de/wp-content/uploads/2013/02/Wetter-Magie-Icon.png"
+					width="70" height="70" />
+				<h:outputText value="Sonnig 23°" />
+  			  </p:layoutUnit>
+
+			<p:layoutUnit position="center" style=" hight:auto; width:auto;">
+       				Mitte
+     	 	</p:layoutUnit>
+	  		<p:layoutUnit position="east" style="hight:auto; width:auto;"> 
+			 <p:tabView orientation="right" styleClass="ui-tabs-vertical" style="width:100px; hight:auto;">
+       				 
+       					 <p:tab title="Start durchführen" >
+       					 <p:fieldset>
+           							    <h:panelGrid columns="1" cellpadding="10">
+                						<h:outputText value="Hallo Seite 1:  
+            							Lorem ipsum dolor sit amet, consectetuer adipiscing elit. rem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,
+            							" />
+            							</h:panelGrid> 
+            			 </p:fieldset>	
+       					 </p:tab>
+        		<p:tab title="Flugzeug einlegen">
+			            			<h:panelGrid columns="1" cellpadding="10">
+			               	 			
+			               				 <h:outputText value="Hallo Seite 2" />
+			            				</h:panelGrid> 
+			            				
+        		</p:tab>
+       			 <p:tab title="Airline anlegen">
+							         	<h:panelGrid columns="1" cellpadding="10">
+						                <h:outputText value="Hallo Seite 3" />
+						            	</h:panelGrid>
+						            	
+        		</p:tab>
+        		
+    		</p:tabView>
+		  	</p:layoutUnit> 
+			<p:layoutUnit position="south" style="height:10em;">
+				<!-- Hier kommt output (benutze value für ausgaben) -->
+				<h:outputText value="Aktivität I" />
+			</p:layoutUnit>
+		</p:layout>
+
+
+
+
+		<!--  	<h:form>
+				<p:inputText id="name" value="#{AirportFacadeBean.name}" />
+				<p:commandButton value="Submit" action="#{AirportFacadeBean.createAirplane}" update=":outtext :outtable"/>
+			</h:form>
+	   		Last name: <h:outputText id="outtext" value="#{AirportFacadeBean.name}" />
+			<p:dataTable value="#{AirportFacadeBean.airplanes}" id="outtable" var="aps" style="border:1px solid black">
+	   			<p:column>
+	  				<f:facet name="header">Id</f:facet>
+	   				#{aps.id}
+	   			</p:column>
+	   			<p:column>
+	   				<f:facet name="header">Name</f:facet>
+	   				#{aps.name}
+	   			</p:column>
+	   		</p:dataTable> -->
+	</ui:define>
+</ui:composition>
+</html>

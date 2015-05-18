@@ -19,9 +19,12 @@ hs_err_pid*
 *.class
 
 # eclipse specific git ignore
+
+src/workspace/.metadata/*
+
 *.pydevproject
-.project
-.metadata
+*/.project/*
+*metadata*
 bin/**
 tmp/**
 tmp/**/*
