@@ -11,14 +11,14 @@ public class Airline {
     @javax.persistence.GeneratedValue
 	private int id;
 	private final String name;
-	private final Collection<Airplane> aircraftCollection;
+	//private final Collection<Airplane> aircraftCollection;
 	private String cityName;
 	private String streetName;
 
 	public Airline(String name) {
 		super();
 		this.name = name;
-		this.aircraftCollection = new ArrayList<Airplane>();
+		//this.aircraftCollection = new ArrayList<Airplane>();
 	}
 
 	public String getCityName() {
@@ -53,9 +53,10 @@ public class Airline {
 	 *            this {@link Airline}
 	 * @return @see {@link Collection#add(Object))
 	 */
+	/*
 	public boolean addAircraft(Airplane airplane) {
 		return aircraftCollection.add(airplane);
-	}
+	}*/
 
     
     

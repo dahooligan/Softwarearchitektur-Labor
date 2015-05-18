@@ -7,10 +7,10 @@ public class Airplane {
 	private int id;
 
 	private final String name;
-	private Airline airline;
-	private StartingDirection startingdirection;
-	private Runway runway;
-	private ParkingPosition parkingPosition;
+	//private Airline airline;
+	//private StartingDirection startingdirection;
+	//private Runway runway;
+	//private ParkingPosition parkingPosition;
 	
 	private AirplaneState state;
 
@@ -22,7 +22,7 @@ public class Airplane {
 	public void startAircraft() {
 		// TODO: start the aircraft
 	}
-
+/*
 	public StartingDirection getStartingdirection() {
 		return startingdirection;
 	}
@@ -30,7 +30,7 @@ public class Airplane {
 	public void setStartingdirection(StartingDirection startingdirection) {
 		this.startingdirection = startingdirection;
 	}
-
+*/
 	public int getId() {
 		return id;
 	}
@@ -38,11 +38,11 @@ public class Airplane {
 	public String getName() {
 		return name;
 	}
-
+	/*
 	public Airline getAirline() {
 		return airline;
-	}
-
+	}*/
+/*
 	public Runway getRunway() {
 		return runway;
 	}
@@ -58,5 +58,5 @@ public class Airplane {
 	public void setParkingPosition(ParkingPosition parkingPosition) {
 		this.parkingPosition = parkingPosition;
 	}
-
+*/
 }
