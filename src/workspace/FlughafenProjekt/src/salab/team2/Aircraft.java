@@ -1,62 +1,73 @@
-package de.airport.ejb.model;
+package salab.team2;
 
-@javax.persistence.Entity(name = "airplane")
-public class Airplane {
-	@javax.persistence.Id
-	@javax.persistence.GeneratedValue
-	private int id;
+public class Aircraft {
 
+	private final int id;
 	private final String name;
-	private Airline airline;
+	private final Airline airline;
 	private StartingDirection startingdirection;
 	private Runway runway;
 	private ParkingPosition parkingPosition;
 	
-	private AirplaneState state;
-
-	public Airplane(String name) {
+	
+	public Aircraft(int id, String name, Airline airline) {
 		super();
+		this.id = id;
 		this.name = name;
+		this.airline = airline;
+		airline.addAircraft(this);
 	}
 
-	public void startAircraft() {
-		// TODO: start the aircraft
+	
+	public void startAircraft()
+	{
+	//TODO: start the aircraft
 	}
+
 
 	public StartingDirection getStartingdirection() {
 		return startingdirection;
 	}
 
+
 	public void setStartingdirection(StartingDirection startingdirection) {
 		this.startingdirection = startingdirection;
 	}
+
 
 	public int getId() {
 		return id;
 	}
 
+
 	public String getName() {
 		return name;
 	}
+
 
 	public Airline getAirline() {
 		return airline;
 	}
 
+
 	public Runway getRunway() {
 		return runway;
 	}
+
 
 	public void setRunway(Runway runway) {
 		this.runway = runway;
 	}
 
+
 	public ParkingPosition getParkingPosition() {
 		return parkingPosition;
 	}
 
+
 	public void setParkingPosition(ParkingPosition parkingPosition) {
 		this.parkingPosition = parkingPosition;
 	}
-
+	
+	
 }
