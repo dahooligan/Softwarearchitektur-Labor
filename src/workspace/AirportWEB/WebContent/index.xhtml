@@ -9,54 +9,167 @@
 	<ui:define name="content">
 
 		<p:layout style="min-width:600px;min-height:500px; height:550px;">
-			<p:layoutUnit position="north" style="height: 3em;">
+			<p:layoutUnit position="north">
 				<h:outputText class="leisteObenOuttext"
 					value="Angemeldet als: Max Mustermann" />
 				<h:outputText class="leisteObenOuttext" value="Berechtigung Lotze" />
 				<h:outputText class="leisteObenOuttext"
 					value="Sitzungsbeginn: 14.05.2015, 12:00:00" />
 				<h:outputText class="leisteObenOuttext"
-					value="Aktuelle Zeit: 15.05.2015, 15:00:00" />
+					value="Aktuelle Zeit: 15.05.2015, 15:00:00"
+					id="leisteObenOuttextLast" />
 			</p:layoutUnit>
-			<p:layoutUnit position="west" resizable="true" size="auto">
-				<p:graphicImage
-					value="http://www.itopnews.de/wp-content/uploads/2013/02/Wetter-Magie-Icon.png"
-					width="70" height="70" />
-				<h:outputText value="Sonnig 23°" />
-  			  </p:layoutUnit>
+			<p:layoutUnit position="west" resizable="true">
+				<h:form id="wetterPanel">
+					<p:graphicImage
+						value="http://www.itopnews.de/wp-content/uploads/2013/02/Wetter-Magie-Icon.png"
+						width="50" height="50" />
+					<h:outputText value="Sonne 23°" class="wetter" />
+					<br />
+					<br />
+					<br />
+					<p:graphicImage value="http://www.mavinci.de/images/icon4.png"
+						width="50" height="50" />
+					<h:outputText value="Windstärke 10m/s" class="wetter" />
+					<br />
+					<br />
+					<br />
+					<p:graphicImage
+						value="http://www.ecophon.com/globalassets/old-structure/imported-files-20140814/fodoc/0b40cd61-9e2d-4cbd-800c-2b91cb959097.jpg?PrintFile=Influence_of_climate_c_125.gif"
+						width="50" height="50" />
+					<h:outputText value="Luftfeuchte 10%" class="wetter" />
+					<br />
+					<br />
+					<br />
+					<p:graphicImage value="http://weather.stage21.de/img/icon/10d.png"
+						width="50" height="50" />
+					<h:outputText value="Wahrscheinlichkeit 20%" class="wetter" />
+				</h:form>
+			</p:layoutUnit>
 
 			<p:layoutUnit position="center" style=" hight:auto; width:auto;">
-       				Mitte
-     	 	</p:layoutUnit>
-	  		<p:layoutUnit position="east" styleClass ="EastContent" style="hight:600px; width:auto;border:none;" > 
-			 <p:tabView orientation="right" styleClass="ui-tabs-vertical">
-       				 
-       					 <p:tab title="Start durchführen" >
-       				
-           							    <h:panelGrid columns="1" cellpadding="10">
-           							    	 
-                						<h:outputText value="Hallo Seite 1:  
-            							Lorem ipsum dolor sit amebus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,
-            							" />
-            							</h:panelGrid> 
-            			 	
-       					 </p:tab>
-        		<p:tab title="Flugzeug einlegen">
-			            			<h:panelGrid columns="1" cellpadding="10">
-			               	 			
-			               				 <h:outputText value="Hallo Seite 2" />
-			            				</h:panelGrid> 
-			            				
-        		</p:tab>
-       			 <p:tab title="Airline anlegen">
-							         	<h:panelGrid columns="1" cellpadding="10">
-						                <h:outputText value="Hallo Seite 3" />
-						            	</h:panelGrid>
-						            	
-        		</p:tab>
-        		
-    		</p:tabView>
-		  	</p:layoutUnit> 
+				<h:form id="animation">
+					<p:graphicImage
+						value="https://openclipart.org/image/2400px/svg_to_png/203378/Boeing-767.png"
+						width="350" height="300" />
+				</h:form>
+				<h:form id="parkbox">
+
+					<h:outputLabel class="parkboxen" value="Parkbox 0" />
+					<h:outputLabel class="parkboxen" value="Parkbox 1" />
+					<h:outputLabel class="parkboxen" value="Parkbox 2 " />
+					<h:outputLabel class="parkboxen" value="Parkbox 3" />
+
+				</h:form>
+			</p:layoutUnit>
+			<p:layoutUnit position="east" styleClass="eastContent">
+				<p:tabView orientation="top" styleClass="ui-tabs-vertical">
+
+					<p:tab title="Start&#10;durchführen">
+						<h:outputText value="Zu startendes Flugzeug:" />
+						<br />
+						<select id="planeStartDropdown" class="dropdown" name="">
+							<option value="0">AA3495</option>
+							<option value="1">AER121</option>
+						</select>
+						<br />
+						<br />
+						<h:outputText value="Flugzeugstatus: " />
+						<br />
+						<p:dataTable value="" id="outtable1" var="sa"
+							selectionMode="single"
+							disabled="false" rowKey="">
+
+							<p:column>
+								<f:facet name="header"> Attribut </f:facet>
+									ID
+							</p:column>
+							<p:column>
+								<f:facet name="header"> Wert </f:facet>
+								0
+							</p:column>
+
+						</p:dataTable>
+						<br />
+						<br />
+						<h:outputText value="Startbahn:" />
+						<br />
+						<select id="startbahnDropdown" class="dropdown" name="">
+							<option value="0">Startbahn1</option>
+							<option value="1">Startbahn2</option>
+							<option value="2">Startbahn3</option>
+						</select>
+						<br />
+						<br />
+						<h:outputText value="Soll-Startzeit: Timepicker implem..." />
+						<br />
+						<br />
+
+						<p:commandButton value="Start anfordern" />
+					</p:tab>
+					<p:tab title="Flugzeug&#10;einlegen">
+						<h:outputText value="Flugzeugname: " />
+						<br />
+						<h:inputText value=" " />
+						<br />
+						<h:outputText value="Airline: " />
+						<br />
+						<select id="airlineDropdown" class="dropdown" name="">
+							<option value="0">Germanwings</option>
+							<option value="1">Türkisch Airline</option>
+							<option value="2">Air Berlin</option>
+						</select>
+						<br />
+						<br />
+
+						<p:commandButton value="Anlegen" />
+						<br />
+						<br />
+						<h:outputText value="Im System vorhandene Flugzeuge:" />
+						<br />
+						<p:scrollPanel id="outputArea1">
+							<h:outputText class="outputArea1Text" value="AER111- Germanwings" />
+						</p:scrollPanel>
+					</p:tab>
+					<p:tab title="Airline&#10;anlegen">
+
+						<h:outputText value="Airlinename: " />
+						<br />
+						<h:inputText value=" " />
+						<br />
+						<h:outputText value="Straße: " />
+						<br />
+						<h:inputText value=" " />
+						<br />
+						<h:outputText value="Stadt: " />
+						<br />
+						<h:inputText value=" " />
+						<br /><br />
+						<p:commandButton value="Anlegen" />
+						<br />
+						<br />
+						<p:dataTable value="" id="outtable2" var="va"
+							selectionMode="single"
+							disabled="false" rowKey="">
+
+							<p:column>
+								<f:facet name="header"> Name </f:facet>
+									Germanwings
+							</p:column>
+							<p:column>
+								<f:facet name="header"> Straße </f:facet>
+								Luftweg 7
+							</p:column>
+							<p:column>
+								<f:facet name="header"> Stadt </f:facet>
+								Stuttgart
+							</p:column>
+							
+						</p:dataTable>
+					</p:tab>
+
+				</p:tabView>
+			</p:layoutUnit>
 			<p:layoutUnit position="south" style="height:10em;">
 				<!-- Hier kommt output (benutze value für ausgaben) -->
 				<h:outputText value="Aktivität I" />
