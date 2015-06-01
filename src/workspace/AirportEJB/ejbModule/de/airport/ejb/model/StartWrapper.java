@@ -10,5 +10,6 @@ package de.airport.ejb.model;
 public class StartWrapper {
 	
 	//TODO: alle informationen zum start zusammensammeln
+	
 
 }

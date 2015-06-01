@@ -19,6 +19,14 @@ public class Airplane {
 		this.name = name;
 	}
 
+	public AirplaneState getState() {
+		return state;
+	}
+
+	public void setState(AirplaneState state) {
+		this.state = state;
+	}
+
 	public void startAircraft() {
 		// TODO: start the aircraft
 	}
