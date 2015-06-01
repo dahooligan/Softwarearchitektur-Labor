@@ -3,15 +3,27 @@ package de.airport.ejb.model;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.OneToMany;
+
+@javax.persistence.Entity(name = "runway")
 public class Runway {
 
+	// TODO: ID Generieren??
+	@javax.persistence.Id
 	private final int id;
+
 	private boolean isFree;
-	private final Collection<StartingDirection> permittedStartingDirections;
+
+	// @OneToMany
+	// @Enumerated(EnumType.STRING)
+	// private final Collection<StartingDirection> permittedStartingDirections;
 
 	public Runway(int id) {
 		super();
-		this.permittedStartingDirections = new ArrayList<StartingDirection>();
+		// this.permittedStartingDirections = new
+		// ArrayList<StartingDirection>();
 		this.id = id;
 	}
 
@@ -27,9 +39,9 @@ public class Runway {
 		return id;
 	}
 
-	public Collection<StartingDirection> getPermittedStartingDirections() {
-		return permittedStartingDirections;
-	}
+	// public Collection<StartingDirection> getPermittedStartingDirections() {
+	// return permittedStartingDirections;
+	// }
 
 	/**
 	 * Adds a {@link StartingDirection} to the list of permitted
@@ -40,9 +52,9 @@ public class Runway {
 	 *            permitted {@link StartingDirection}s.
 	 * @return @see {@link Collection#add(Object)}
 	 */
-	public boolean addStartingDirection(StartingDirection direction) {
-		return permittedStartingDirections.add(direction);
-	}
+	// public boolean addStartingDirection(StartingDirection direction) {
+	// return permittedStartingDirections.add(direction);
+	// }
 
 	/**
 	 * Removes a {@link StartingDirection} from the {@link Collection} of
@@ -52,8 +64,8 @@ public class Runway {
 	 *            the {@link StartingDirection} to be removed
 	 * @return @see {@link Collection#remove(Object)}
 	 */
-	public boolean removeStartingDirection(StartingDirection direction) {
-		return permittedStartingDirections.remove(direction);
-	}
+	// public boolean removeStartingDirection(StartingDirection direction) {
+	// return permittedStartingDirections.remove(direction);
+	// }
 
 }
