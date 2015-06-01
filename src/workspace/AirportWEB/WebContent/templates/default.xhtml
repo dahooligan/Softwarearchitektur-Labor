@@ -24,27 +24,36 @@ html{
 	background-color:white;
 }
 .leisteObenOuttext{
+	
 	padding: 10px;
 	border-right: 1px solid black;
 }
+#leisteObenOuttextLast{
+border:none;
+}
 .ui-tabs-vertical{
-	width:400px; 
-	hight:500px;
+	margin-top:-3px;
+	width:300px; 
+	height:462px;
+	
 }
-.EastContent{
-	top: 34px;
-    
-}
+
 .ui-layout-east{
  top:34px;
 }
-#j_idt18{
-top:34px;
+.ui-tabs.ui-tabs-top > .ui-tabs-nav li {
+    border-bottom: 0;
+   
+    white-space: pre;
+    margin-left: 9px; 
 }
 .ui-layout-unit .ui-layout-unit-content {
     padding: 0.2em 0em;
     border: 0px none;
     overflow: hidden; 
+}
+.ui-tabs.ui-tabs-right{
+hight:42px;
 }
 .ui-tabs.ui-tabs-right > .ui-tabs-nav {
     float: right;
@@ -55,17 +64,67 @@ top:34px;
     -webkit-transform: rotate(90deg);
  	-moz-transform: rotate(90deg);
  	-o-transform: rotate(90deg);
-
 }
+/*grauer balken menu*/
+.ui-helper-clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+.ui-state-default ui-corner-upper{
+	float:right;
+}
+#animation{
+margin-top: 10px;
+border: 1px dotted gray;
+margin-left: 5px;
+margin-right: 5px;
+padding: 5px;
+}
+#parkbox{
+ margin-top: 100px;
+
+ }
+ .parkboxen{
+ margin-left: 30px;
+ padding: 10px;
+ border: 1px solid black;
+ 
+ }
+ .wetter{
+ margin-left:10px;
+ }
+ #wetterPanel{
+ margin-top: 40px;
+ margin-left: 5px;
+ }
+ .eastContent{
+ border:none;
+ }
+ .dropdown{
+ width:150px;
+ }
+ #outputArea1{
+ width:150px;
+ height:200px;
+ border: 1px solid black;
+ }
+ .outputArea1Text{
+ padding: 5px;
+ }
+
 /* this will affect the fonts of all PrimeFaces components */
-.ui-widget {
+.ui-widget, table {
   font-family: Rockwell, 'Courier Bold', Courier, Georgia, Times, 'Times New Roman', serif;
   font-size: 12px;
   font-style: normal;
   font-variant: normal;
   font-weight: 400;
   line-height: 20px;               
- }              
+ }  
+           
 	</style>
 	</h:body>
 </html>
