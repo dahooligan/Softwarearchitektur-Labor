@@ -7,7 +7,7 @@ package de.airport.ejb.model;
  * @author Matthias
  *
  */
-//TODO: persist all the thingies!!
+//TODO: persist all the things!!
 public class StartWrapper {
 	
 	//TODO: alle informationen zum start zusammensammeln
