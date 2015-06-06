@@ -135,8 +135,7 @@
 						<br />
 						<br />
 
-						<p:commandButton value="Anlegen" action="#{airportFacadeBean.createAirplane}"/>
-						</h:form>
+						<p:commandButton value="Anlegen" action="#{airportFacadeBean.createAirplane}" update="airplanes" /> 
 						<br />
 						<br />
 						<h:outputText value="Im System vorhandene Flugzeuge:" />
@@ -146,7 +145,7 @@
 							<h:outputText class="outputArea1Text" value="AER111- Germanwings" />
 						</p:scrollPanel>
 						-->
-						<p:dataTable var="aps" value="#{airportFacadeBean.airplanes}" >
+						<p:dataTable id="airplanes" var="aps" value="#{airportFacadeBean.airplanes}" >
 						<!--  id="outtable2" 
 							
 							disabled="false"> -->
@@ -160,8 +159,9 @@
 									#{aps.airlineName}
 							</p:column>							
 						</p:dataTable>
+						</h:form>
 					</p:tab>
-					<p:tab title="Airline&#10;anlegen">
+					<p:tab id="createAirline" title="Airline&#10;anlegen">
 					<h:form>
 						<h:outputText value="Airlinename: " />
 						<br />
@@ -175,12 +175,12 @@
 						<br />
 						<h:inputText id="city" value="#{airportFacadeBean.cityName}" />
 						<br /><br />
-						<p:commandButton value="Anlegen" action="#{airportFacadeBean.createAirline}" />
+						<p:commandButton value="Anlegen" action="#{airportFacadeBean.createAirline}" update="airlines" />
 						<br />
-					</h:form>
+					
 
 						<br />
-						<p:dataTable var="alns" value="#{airportFacadeBean.airlines}" >
+						<p:dataTable id="airlines" var="alns" value="#{airportFacadeBean.airlines}" >
 						<!--  id="outtable2" 
 							
 							disabled="false"> -->
@@ -199,6 +199,7 @@
 							</p:column>
 							
 						</p:dataTable>
+						</h:form>
 					</p:tab>
 
 				</p:tabView>
