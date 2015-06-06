@@ -7,6 +7,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import de.airport.ejb.AirportFacade;
+import de.airport.ejb.controller.StartAirplaneController;
 import de.airport.ejb.model.Airline;
 import de.airport.ejb.model.Airplane;
 
@@ -16,6 +17,9 @@ public class AirportFacadeBean {
 	private String name;
 	private String street;
 	private String city;
+	
+	@EJB
+	private StartAirplaneController controller;
 	
 	@EJB
 	private AirportFacade facade;
