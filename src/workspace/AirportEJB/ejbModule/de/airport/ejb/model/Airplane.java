@@ -1,5 +1,8 @@
 package de.airport.ejb.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
@@ -28,11 +31,35 @@ public class Airplane {
 	@Enumerated(EnumType.STRING) 
 	 private AirplaneState state;
 
+	public Airplane() {
+		super();
+		this.name="unknown";
+		System.err.println("Airline-Default-Constr. executed");
+	}
+	
 	public Airplane(String name) {
 		super();
 		this.name = name;
 	}
 
+	public Airline getAirline() {
+		return airline;
+	}
+
+	public void setAirline(Airline airline) {
+		this.airline = airline;
+	}
+
+	public String getAirlineName() {
+		
+		/* Funktioniert nicht. 
+		 * @ Matze: Hier is ne hibernate-Exc... Iwas mit dem LazyInitializer. 
+		 * Kannst du das mal checken?
+		 * 
+		 * return airline.getName();
+		 */
+		return "dummy";
+	}
 	public AirplaneState getState() {
 		return state;
 	}
@@ -72,4 +99,5 @@ public class Airplane {
 	 * public void setParkingPosition(ParkingPosition parkingPosition) {
 	 * this.parkingPosition = parkingPosition; }
 	 */
+
 }

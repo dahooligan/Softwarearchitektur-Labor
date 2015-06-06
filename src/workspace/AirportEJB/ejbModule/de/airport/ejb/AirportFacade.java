@@ -1,5 +1,6 @@
 package de.airport.ejb;
 
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -20,9 +21,21 @@ public class AirportFacade {
 	@PersistenceContext(unitName = "airport")
 	private EntityManager em;
 
-	public void createAirplane(String name) { 
+	public void createAirplane(String name, String airline) { 
 		Airplane airplane = new Airplane(name);
+		airplane.setAirline(getAirlineById(airline));
 		em.persist(airplane);
+		System.err.println("Airplane persistiert");
+	}
+	
+	public Airline getAirlineById(String id) {
+		//List<Airline> airlineById = new ArrayList<Airline>();
+		//TypedQuery<Airplane> query = em.createQuery("select e from airplane e order by e.name", Airplane.class);
+		//PreparedStatement s = em.
+		Airline al = em.find(Airline.class, Integer.parseInt(id, 10));
+		//TypedQuery<Airplane> query1;
+		
+		return al;
 	}
 	
 	public void createAirline(String name, String street, String city) {
@@ -33,9 +46,10 @@ public class AirportFacade {
 		em.persist(airline);	}
 
 	public List<Airplane> getAirplanes() {
-		Query query = em.createQuery("select e from airplane e order by e.name");
+		TypedQuery<Airplane> query = em.createQuery("select e from airplane e order by e.name", Airplane.class);
 		System.err.println("here I am");
-		return query.getResultList();
+		List<Airplane> res = query.getResultList();
+		return res;
 	}
 	
 	public List<Airline> getAirlines() {
