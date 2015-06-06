@@ -1,6 +1,12 @@
 package de.airport.ejb.model;
 
+import javax.persistence.GeneratedValue;
+
+
+@javax.persistence.Entity(name = "parkingposition")
 public class ParkingPosition {
+	@javax.persistence.Id
+	@GeneratedValue
 	private final int id;
 	private boolean isFree;
 	
