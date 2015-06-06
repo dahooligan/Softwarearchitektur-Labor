@@ -132,37 +132,40 @@
 						</p:scrollPanel>
 					</p:tab>
 					<p:tab title="Airline&#10;anlegen">
-
+					<h:form>
 						<h:outputText value="Airlinename: " />
 						<br />
-						<h:inputText value=" " />
+						<h:inputText id="name" value="#{airportFacadeBean.name}" />
 						<br />
 						<h:outputText value="Straße: " />
 						<br />
-						<h:inputText value=" " />
+						<h:inputText id="street" value="#{airportFacadeBean.streetName}" />
 						<br />
 						<h:outputText value="Stadt: " />
 						<br />
-						<h:inputText value=" " />
+						<h:inputText id="city" value="#{airportFacadeBean.cityName}" />
 						<br /><br />
-						<p:commandButton value="Anlegen" />
+						<p:commandButton value="Submit" action="#{airportFacadeBean.createAirline}" />
 						<br />
-						<br />
-						<p:dataTable value="" id="outtable2" var="va"
-							selectionMode="single"
-							disabled="false" rowKey="">
+					</h:form>
 
+						<br />
+						<p:dataTable var="alns" value="#{airportFacadeBean.airlines}" >
+						<!--  id="outtable2" 
+							
+							disabled="false"> -->
+<!-- selectionMode="single" rowKey = "" -->
 							<p:column>
 								<f:facet name="header"> Name </f:facet>
-									Germanwings
+									#{alns.name}
 							</p:column>
 							<p:column>
 								<f:facet name="header"> Straße </f:facet>
-								Luftweg 7
+									#{alns.streetName}
 							</p:column>
 							<p:column>
 								<f:facet name="header"> Stadt </f:facet>
-								Stuttgart
+									#{alns.cityName}
 							</p:column>
 							
 						</p:dataTable>

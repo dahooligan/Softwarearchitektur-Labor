@@ -16,6 +16,13 @@ public class Airline {
 	private final Collection<Airplane> aircraftCollection;
 	private String cityName;
 	private String streetName;
+	
+	public Airline() {
+		super();
+		this.name = "Unknown";
+		this.aircraftCollection = new ArrayList<Airplane>();
+	}
+
 
 	public Airline(String name) {
 		super();

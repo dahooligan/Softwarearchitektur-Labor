@@ -15,33 +15,34 @@ import de.airport.ejb.model.Airplane;
 @SessionScoped
 public class AirportFacadeBean {
 	private String name;
-	private String street;
-	private String city;
+	private String streetName;
+	private String cityName;
 	
-	@EJB
-	private StartAirplaneController controller;
+	//@EJB
+	//private StartAirplaneController controller;
 	
 	@EJB
 	private AirportFacade facade;
 
-	public String getStreet() {
-		return street;
+	public String getStreetName() {
+		return streetName;
 	}
 
-	public void setStreet(String street) {
-		this.street = street;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
+	public void setStreetName(String street) {
+		this.streetName = street;
 	}
 	
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String city) {
+		this.cityName = city;
+	}
+
 	public void createAirline() {
-		facade.createAirline(name, street, city);
+		System.err.println("AFB: Creating Airline with: " + name + " - " + streetName + " - " + cityName);
+		facade.createAirline(name, streetName, cityName);
 	}
 	
 	public List<Airline> getAirlines() {
