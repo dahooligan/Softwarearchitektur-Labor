@@ -19,7 +19,7 @@ public class Airplane {
 
 	private final String name;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "aircraftCollection")
 	private Airline airline;
 
@@ -58,7 +58,8 @@ public class Airplane {
 		 * 
 		 * return airline.getName();
 		 */
-		return "dummy";
+		//return "dummy";
+		return airline.getName();
 	}
 	public AirplaneState getState() {
 		return state;
