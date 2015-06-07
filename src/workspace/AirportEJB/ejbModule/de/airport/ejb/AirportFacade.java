@@ -38,11 +38,23 @@ public class AirportFacade {
 		return al;
 	}
 	
+	public Airplane getAirplaneById(String id) {
+		//List<Airline> airlineById = new ArrayList<Airline>();
+		//TypedQuery<Airplane> query = em.createQuery("select e from airplane e order by e.name", Airplane.class);
+		//PreparedStatement s = em.
+		Airplane ap = em.find(Airplane.class, Integer.parseInt(id, 10));
+		//TypedQuery<Airplane> query1;
+		
+		return ap;
+	}
+	
+	
 	public void createAirline(String name, String street, String city) {
 		Airline airline = new Airline(name);
 		airline.setStreetName(street);
 		airline.setCityName(city);
 		System.err.println("AF: Creating Airline with: " + name + " - " + street + " - " + city);
+		
 		em.persist(airline);	}
 
 	public List<Airplane> getAirplanes() {
