@@ -63,33 +63,44 @@
 				</h:form>
 			</p:layoutUnit>
 			<p:layoutUnit position="east" styleClass="eastContent">
-				<p:tabView orientation="top" styleClass="ui-tabs-vertical">
+				<p:tabView id="tv" orientation="top" styleClass="ui-tabs-vertical">
 
 					<p:tab title="Start&#10;durchführen">
-					<h:form>
+					<h:form id="form1">
 						<h:outputText value="Zu startendes Flugzeug:" />
 						<br />
+						<h:selectOneMenu id="planeStartDropdown" class="dropdown" value="#{airportFacadeBean.airplane}" update="tv" >
+						<!-- onChange="#{airportFacadeBead.airplaneSelectionChanged}" -->
+    						
+    						<p:ajax listener="#{airportFacadeBean.airplaneSelectionChanged}" render="tv"/>
+    						
+    						<f:selectItems value="#{airportFacadeBean.airplaneItems}" />
+    						<!--  
+    						<f:selectItem itemLabel="1" itemValue="1" />
+    						<f:selectItem itemLabel="a" itemValue="b" />
+    						-->
+						</h:selectOneMenu> 
+						<!--  
 						<select id="planeStartDropdown" class="dropdown" name="">
 							<option value="0">AA3495</option>
 							<option value="1">AER121</option>
-						</select>
+						</select> -->
 						<br />
 						<br />
 						<h:outputText value="Flugzeugstatus: " />
 						<br />
-						<p:dataTable value="" id="outtable1" var="sa"
-							selectionMode="single"
-							disabled="false" rowKey="">
-
+						<p:dataTable var="info" value="#{airportFacadeBean.airplaneInfo}" id="outtable1">
+							<!-- selectionMode="single"
+							disabled="false" rowKey=""> -->
 							<p:column>
 								<f:facet name="header"> Attribut </f:facet>
-									ID
+									#{info.key}
 							</p:column>
 							<p:column>
 								<f:facet name="header"> Wert </f:facet>
-								0
+								#{info.value}
 							</p:column>
-
+						
 						</p:dataTable>
 						<br />
 						<br />
@@ -109,7 +120,8 @@
 						<p:commandButton value="Start anfordern" />
 					</h:form>
 					</p:tab>
-					<p:tab title="Flugzeug&#10;anlegen">
+					<p:tab id="fzanlegen" title="Flugzeug&#10;anlegen" update="airlineDropdown">
+						
 						<h:form>
 						<h:outputText value="Flugzeugname: " />
 						<br />
