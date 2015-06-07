@@ -12,7 +12,7 @@
 			<p:layoutUnit position="north">
 				<h:outputText class="leisteObenOuttext"
 					value="Angemeldet als: Max Mustermann" />
-				<h:outputText class="leisteObenOuttext" value="Berechtigung Lotze" />
+				<h:outputText class="leisteObenOuttext" value="Berechtigung Lotse" />
 				<h:outputText class="leisteObenOuttext"
 					value="Sitzungsbeginn: 14.05.2015, 12:00:00" />
 				<h:outputText class="leisteObenOuttext"
@@ -66,6 +66,7 @@
 				<p:tabView orientation="top" styleClass="ui-tabs-vertical">
 
 					<p:tab title="Start&#10;durchführen">
+					<h:form>
 						<h:outputText value="Zu startendes Flugzeug:" />
 						<br />
 						<select id="planeStartDropdown" class="dropdown" name="">
@@ -106,66 +107,99 @@
 						<br />
 
 						<p:commandButton value="Start anfordern" />
+					</h:form>
 					</p:tab>
-					<p:tab title="Flugzeug&#10;einlegen">
+					<p:tab title="Flugzeug&#10;anlegen">
+						<h:form>
 						<h:outputText value="Flugzeugname: " />
 						<br />
-						<h:inputText value=" " />
+						<h:inputText value="#{airportFacadeBean.fname}" />
 						<br />
 						<h:outputText value="Airline: " />
 						<br />
+						<!-- 
 						<select id="airlineDropdown" class="dropdown" name="">
 							<option value="0">Germanwings</option>
 							<option value="1">Türkisch Airline</option>
 							<option value="2">Air Berlin</option>
 						</select>
+						 
+						<h:selectOneMenu id="airlineDropdown" value="#{airportFacadeBean.airlines}" var="c">
+    						<f:selectItems
+    							 itemLabel="#{c.name}" value="#{c.name}" />
+						</h:selectOneMenu> 
+						-->
+						<h:selectOneMenu id="airlineDropdown" value="#{airportFacadeBean.airline}">
+    						<f:selectItems value="#{airportFacadeBean.airlineItems}" />
+						</h:selectOneMenu> 
 						<br />
 						<br />
 
-						<p:commandButton value="Anlegen" />
+						<p:commandButton value="Anlegen" action="#{airportFacadeBean.createAirplane}" update="airplanes" /> 
 						<br />
 						<br />
 						<h:outputText value="Im System vorhandene Flugzeuge:" />
 						<br />
+						<!-- 
 						<p:scrollPanel id="outputArea1">
 							<h:outputText class="outputArea1Text" value="AER111- Germanwings" />
 						</p:scrollPanel>
+						-->
+						<p:dataTable id="airplanes" var="aps" value="#{airportFacadeBean.airplanes}" >
+						<!--  id="outtable2" 
+							
+							disabled="false"> -->
+<!-- selectionMode="single" rowKey = "" -->
+							<p:column>
+								<f:facet name="header"> Name </f:facet>
+									#{aps.name}
+							</p:column>
+							<p:column>
+								<f:facet name="header"> Airline </f:facet>
+									#{aps.airlineName}
+							</p:column>							
+						</p:dataTable>
+						</h:form>
 					</p:tab>
-					<p:tab title="Airline&#10;anlegen">
-
+					<p:tab id="createAirline" title="Airline&#10;anlegen">
+					<h:form>
 						<h:outputText value="Airlinename: " />
 						<br />
-						<h:inputText value=" " />
+						<h:inputText id="name" value="#{airportFacadeBean.name}" />
 						<br />
 						<h:outputText value="Straße: " />
 						<br />
-						<h:inputText value=" " />
+						<h:inputText id="street" value="#{airportFacadeBean.streetName}" />
 						<br />
 						<h:outputText value="Stadt: " />
 						<br />
-						<h:inputText value=" " />
+						<h:inputText id="city" value="#{airportFacadeBean.cityName}" />
 						<br /><br />
-						<p:commandButton value="Anlegen" />
+						<p:commandButton value="Anlegen" action="#{airportFacadeBean.createAirline}" update="airlines" />
 						<br />
-						<br />
-						<p:dataTable value="" id="outtable2" var="va"
-							selectionMode="single"
-							disabled="false" rowKey="">
+					
 
+						<br />
+						<p:dataTable id="airlines" var="alns" value="#{airportFacadeBean.airlines}" >
+						<!--  id="outtable2" 
+							
+							disabled="false"> -->
+<!-- selectionMode="single" rowKey = "" -->
 							<p:column>
 								<f:facet name="header"> Name </f:facet>
-									Germanwings
+									#{alns.name}
 							</p:column>
 							<p:column>
 								<f:facet name="header"> Straße </f:facet>
-								Luftweg 7
+									#{alns.streetName}
 							</p:column>
 							<p:column>
 								<f:facet name="header"> Stadt </f:facet>
-								Stuttgart
+									#{alns.cityName}
 							</p:column>
 							
 						</p:dataTable>
+						</h:form>
 					</p:tab>
 
 				</p:tabView>
