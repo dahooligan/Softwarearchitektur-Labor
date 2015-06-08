@@ -10,6 +10,7 @@
 
 		<p:layout id="mainLayout"
 			style="min-width:600px;min-height:500px; height:550px;">
+			
 			<p:layoutUnit id="ID2" position="north">
 				<h:outputText id="ID3" class="leisteObenOuttext"
 					value="Angemeldet als: Max Mustermann" />
@@ -23,8 +24,9 @@
 			</p:layoutUnit>
 			<p:layoutUnit id="ID6" position="west" resizable="true">
 				<h:form id="wetterPanel">
-					<p:remoteCommand id="ID7" name="onload"
-						action="#{airportFacadeBean.init}" autoRun="true" />
+				<p:remoteCommand id="ID7" name="onload"
+						action="#{airportFacadeBean.init}" autoRun="true" update=":tv" />
+					
 					<p:graphicImage id="ID8"
 						value="http://www.itopnews.de/wp-content/uploads/2013/02/Wetter-Magie-Icon.png"
 						width="50" height="50" />
@@ -79,11 +81,11 @@
 							<h:outputText id="ID25" value="Zu startendes Flugzeug:" />
 							<br />
 							<h:selectOneMenu id="planeStartDropdown" class="dropdown"
-								value="#{airportFacadeBean.airplane}" update="tv">
+								value="#{airportFacadeBean.airplane}" update=":tv:form1:outtable1">
 								<!-- onChange="#{airportFacadeBead.airplaneSelectionChanged}" -->
 
 								<p:ajax listener="#{airportFacadeBean.airplaneSelectionChanged}"
-									render="tv" />
+									render=":tv:form1:outtable1" />
 
 								<f:selectItems id="ID26"
 									value="#{airportFacadeBean.airplaneItems}" />
@@ -116,15 +118,15 @@
 
 							</p:dataTable>
 							<br />
-							<br />
+							
 							<h:outputText id="ID33" value="Startbahn:" />
 							<br />
-							<select id="startbahnDropdown" class="dropdown" name="">
-								<option id="ID34" value="0">Startbahn1</option>
-								<option id="ID35" value="1">Startbahn2</option>
-								<option id="ID36" value="2">Startbahn3</option>
-							</select>
-							<h:outputText value="Startbahn:" />
+							<h:selectOneMenu id="startbahnDropdown" class="dropdown" name="" value="#{airportFacadeBean.runway}">
+								<f:selectItem id="ID34" itemValue="0" itemLabel="Startbahn1" />
+								<f:selectItem id="ID35" itemValue="1" itemLabel="Startbahn2" />
+								<f:selectItem id="ID36" itemValue="2" itemLabel="Startbahn3" />
+							</h:selectOneMenu>
+							<br />
 							<h:outputText value="Startrichtung:" />
 							<br />
 							<h:selectOneMenu id="richtungsDropdown" class="dropdown" name=""
@@ -135,7 +137,10 @@
 							<br />
 							<br />
 							<h:outputText id="ID37"
-								value="Soll-Startzeit: Timepicker implem..." />
+								value="Soll-Startzeit:"/>
+							<br />
+							<p:spinner value="#{airportFacadeBean.startingHour}" min="0" max = "23" size="3" /> 
+							: <p:spinner value="#{airportFacadeBean.startingMin}" min="0" max = "59" size="3" />
 							<br />
 							<br />
 
@@ -249,7 +254,7 @@
 			</p:layoutUnit>
 			<p:layoutUnit id="ID62" position="south" style="height:10em;">
 				<!-- Hier kommt output (benutze value für ausgaben) -->
-				<h:outputText id="ID63" value="Aktivität I" />
+				<h:outputText id="ID63" binding="#{airportFacadeBean.logText}" />
 			</p:layoutUnit>
 		</p:layout>
 
