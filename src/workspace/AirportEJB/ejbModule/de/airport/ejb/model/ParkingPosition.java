@@ -11,9 +11,16 @@ public class ParkingPosition {
 	
 	private boolean isFree;
 	
+	public ParkingPosition() {
+		super();
+		this.id = 9;
+		this.isFree = true;
+	}
+	
 	public ParkingPosition(int id) {
 		super();
 		this.id = id;
+		this.isFree = true;
 	}
 
 	public boolean isFree() {

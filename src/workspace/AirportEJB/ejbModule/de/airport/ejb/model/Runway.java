@@ -6,17 +6,17 @@ import java.util.Collection;
 import javax.persistence.ElementCollection;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 
 @javax.persistence.Entity(name = "runway")
 public class Runway {
 
-	// TODO: ID Generieren??
 	@javax.persistence.Id
 	private int id;
 
 	private boolean isFree;
 
-	@ElementCollection(targetClass = StartingDirection.class)
+	@ElementCollection(targetClass = StartingDirection.class, fetch = FetchType.EAGER)
 	@Enumerated(EnumType.STRING)
 	private Collection<StartingDirection> permittedStartingDirections;
 
@@ -24,9 +24,17 @@ public class Runway {
 		// this method is intentionally left blank.
 	}
 
+	public Runway() {
+		super ();
+		this.permittedStartingDirections = new ArrayList<StartingDirection>();
+		this.isFree = true;
+		this.id = 9;
+	}
+	
 	public Runway(int id) {
 		super();
 		this.permittedStartingDirections = new ArrayList<StartingDirection>();
+		this.isFree = true;
 		this.id = id;
 	}
 
