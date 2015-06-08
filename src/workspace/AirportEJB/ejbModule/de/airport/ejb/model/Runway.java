@@ -12,13 +12,17 @@ public class Runway {
 
 	// TODO: ID Generieren??
 	@javax.persistence.Id
-	private final int id;
+	private int id;
 
 	private boolean isFree;
 
 	@ElementCollection(targetClass = StartingDirection.class)
 	@Enumerated(EnumType.STRING)
-	private final Collection<StartingDirection> permittedStartingDirections;
+	private Collection<StartingDirection> permittedStartingDirections;
+
+	public Runway() {
+		// this method is intentionally left blank.
+	}
 
 	public Runway(int id) {
 		super();

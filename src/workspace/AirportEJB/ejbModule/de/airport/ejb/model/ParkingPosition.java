@@ -8,6 +8,7 @@ public class ParkingPosition {
 	@javax.persistence.Id
 	@GeneratedValue
 	private final int id;
+	
 	private boolean isFree;
 	
 	public ParkingPosition(int id) {
