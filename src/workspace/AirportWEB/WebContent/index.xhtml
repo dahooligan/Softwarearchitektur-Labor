@@ -8,7 +8,7 @@
 
 	<ui:define name="content">
 
-		<p:layout style="min-width:600px;min-height:500px; height:550px;">
+		<p:layout id="mainLayout" style="min-width:600px;min-height:500px; height:550px;">
 			<p:layoutUnit position="north">
 				<h:outputText class="leisteObenOuttext"
 					value="Angemeldet als: Max Mustermann" />
@@ -21,6 +21,7 @@
 			</p:layoutUnit>
 			<p:layoutUnit position="west" resizable="true">
 				<h:form id="wetterPanel">
+				<p:remoteCommand name="onload" action="#{airportFacadeBean.init}" autoRun="true" />
 					<p:graphicImage
 						value="http://www.itopnews.de/wp-content/uploads/2013/02/Wetter-Magie-Icon.png"
 						width="50" height="50" />
@@ -62,7 +63,7 @@
 
 				</h:form>
 			</p:layoutUnit>
-			<p:layoutUnit position="east" styleClass="eastContent">
+			<p:layoutUnit id="controlPanel" position="east" styleClass="eastContent">
 				<p:tabView id="tv" orientation="top" styleClass="ui-tabs-vertical">
 
 					<p:tab title="Start&#10;durchführen">
