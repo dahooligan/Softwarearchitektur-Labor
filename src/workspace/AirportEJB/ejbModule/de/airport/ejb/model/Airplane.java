@@ -1,15 +1,10 @@
 package de.airport.ejb.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import de.airport.ejb.model.Airline;
 
 @javax.persistence.Entity(name = "airplane")
 public class Airplane {
@@ -23,27 +18,27 @@ public class Airplane {
 	@JoinColumn(name = "aircraftCollection")
 	private Airline airline;
 
-	@Enumerated(EnumType.STRING) 
+	@Enumerated(EnumType.STRING)
 	private StartingDirection startingdirection;
-	// private Runway runway;
-	// private ParkingPosition parkingPosition;
 
-	@Enumerated(EnumType.STRING) 
-	 private AirplaneState state;
+	@ManyToOne
+	private Runway runway;
+
+	@ManyToOne
+	private ParkingPosition parkingPosition;
+
+	@Enumerated(EnumType.STRING)
+	private AirplaneState state;
 
 	public Airplane() {
 		super();
-		this.name="unknown";
+		this.name = "unknown";
 		System.err.println("Airline-Default-Constr. executed");
 	}
-	
+
 	public Airplane(String name) {
 		super();
 		this.name = name;
-	}
-
-	public Airline getAirline() {
-		return airline;
 	}
 
 	public void setAirline(Airline airline) {
@@ -51,16 +46,9 @@ public class Airplane {
 	}
 
 	public String getAirlineName() {
-		
-		/* Funktioniert nicht. 
-		 * @ Matze: Hier is ne hibernate-Exc... Iwas mit dem LazyInitializer. 
-		 * Kannst du das mal checken?
-		 * 
-		 * return airline.getName();
-		 */
-		//return "dummy";
 		return airline.getName();
 	}
+
 	public AirplaneState getState() {
 		return state;
 	}
@@ -73,13 +61,14 @@ public class Airplane {
 		// TODO: start the aircraft
 	}
 
-	/*
-	 * public StartingDirection getStartingdirection() { return
-	 * startingdirection; }
-	 * 
-	 * public void setStartingdirection(StartingDirection startingdirection) {
-	 * this.startingdirection = startingdirection; }
-	 */
+	public StartingDirection getStartingdirection() {
+		return startingdirection;
+	}
+
+	public void setStartingdirection(StartingDirection startingdirection) {
+		this.startingdirection = startingdirection;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -87,18 +76,25 @@ public class Airplane {
 	public String getName() {
 		return name;
 	}
-	/*
-	 * public Airline getAirline() { return airline; }
-	 */
-	/*
-	 * public Runway getRunway() { return runway; }
-	 * 
-	 * public void setRunway(Runway runway) { this.runway = runway; }
-	 * 
-	 * public ParkingPosition getParkingPosition() { return parkingPosition; }
-	 * 
-	 * public void setParkingPosition(ParkingPosition parkingPosition) {
-	 * this.parkingPosition = parkingPosition; }
-	 */
+
+	public Airline getAirline() {
+		return airline;
+	}
+
+	public Runway getRunway() {
+		return runway;
+	}
+
+	public void setRunway(Runway runway) {
+		this.runway = runway;
+	}
+
+	public ParkingPosition getParkingPosition() {
+		return parkingPosition;
+	}
+
+	public void setParkingPosition(ParkingPosition parkingPosition) {
+		this.parkingPosition = parkingPosition;
+	}
 
 }

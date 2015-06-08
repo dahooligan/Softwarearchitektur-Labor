@@ -12,13 +12,17 @@ import javax.persistence.FetchType;
 public class Runway {
 
 	@javax.persistence.Id
-	private final int id;
+	private int id;
 
 	private boolean isFree;
 
 	@ElementCollection(targetClass = StartingDirection.class, fetch = FetchType.EAGER)
 	@Enumerated(EnumType.STRING)
-	private final Collection<StartingDirection> permittedStartingDirections;
+	private Collection<StartingDirection> permittedStartingDirections;
+
+	public Runway() {
+		// this method is intentionally left blank.
+	}
 
 	public Runway() {
 		super ();
