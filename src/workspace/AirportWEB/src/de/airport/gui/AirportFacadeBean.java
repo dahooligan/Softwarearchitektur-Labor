@@ -360,13 +360,30 @@ public class AirportFacadeBean {
 			
 			switch(cs) {
 			case AirplaneNotAvailable: 
-				System.err.println("InitiateStart failed: Airplane not found."); break;
-			case DirectionForbidden: System.err.println("InitiateStart failed: Forbidden Direction."); break;
-			case RunwayOccupied: System.err.println("InitiateStart failed: Runway is occupied."); break;
-			case StartingTimeError: System.err.println("InitiateStart failed: Invalid Startingtime."); break;
+				System.err.println("InitiateStart failed: Airplane not found."); 
+				logText.setValue("Flugzeug " + ap.getName() + " konnte nicht gestartet werden. Es wurde nicht im System gefunden."
+						 + "\n" + logText.getValue());
+				break;
+			case DirectionForbidden: 
+				System.err.println("InitiateStart failed: Forbidden Direction."); 
+				logText.setValue("Flugzeug " + ap.getName() + " konnte nicht gestartet werden. Es wurde eine falsche Startrichtung eingegeben."
+						 + "\n" + logText.getValue());
+				break;
+			case RunwayOccupied: 
+				System.err.println("InitiateStart failed: Runway is occupied."); 
+				logText.setValue("Flugzeug " + ap.getName() + " konnte nicht gestartet werden. Die Startbahn "
+						+ (runw.getId()+1) + "ist belegt."
+						 + "\n" + logText.getValue());
+				break;
+			case StartingTimeError: 
+				System.err.println("InitiateStart failed: Invalid Startingtime."); 
+				logText.setValue("Flugzeug " + ap.getName() + " konnte nicht gestartet werden. Die Startzeit liegt vor der aktuellen Zeit."
+						 + "\n" + logText.getValue());
+				break;
 			default: 
 				System.err.println("Airplane started"); 
-				logText.setValue("started ap");
+				logText.setValue("Flugzeug " + ap.getName() + " ist auf dem Weg zu Startbahn "
+						+ (runw.getId()+1) + "\n" + logText.getValue());
 				break;
 			}
 		}	
