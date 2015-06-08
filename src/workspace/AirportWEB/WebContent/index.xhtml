@@ -104,14 +104,20 @@
 						
 						</p:dataTable>
 						<br />
-						<br />
 						<h:outputText value="Startbahn:" />
 						<br />
-						<select id="startbahnDropdown" class="dropdown" name="">
-							<option value="0">Startbahn1</option>
-							<option value="1">Startbahn2</option>
-							<option value="2">Startbahn3</option>
-						</select>
+						<h:selectOneMenu id="startbahnDropdown" class="dropdown" name="" value="#{airportFacadeBean.runway}">
+							<f:selectItem itemValue="0" itemLabel="Startbahn1" />
+							<f:selectItem itemValue="1" itemLabel="Startbahn2" />
+							<f:selectItem itemValue="2" itemLabel="Startbahn3" />
+						</h:selectOneMenu>
+						<br />
+						<h:outputText value="Startrichtung:" />
+						<br />
+						<h:selectOneMenu id="richtungsDropdown" class="dropdown" name="" value="#{airportFacadeBean.direction}">
+							<f:selectItem itemValue="EW" itemLabel="East -> West" />
+							<f:selectItem itemValue="WE" itemLabel="West -> East" />
+						</h:selectOneMenu>
 						<br />
 						<br />
 						<h:outputText value="Soll-Startzeit: Timepicker implem..." />

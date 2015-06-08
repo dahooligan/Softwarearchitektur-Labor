@@ -31,6 +31,8 @@ public class AirportFacadeBean {
 	private String cityName;
 	private String airline;
 	private String airplane;
+	private String direction;
+	private String runway;
 	private List<InformationOutput> airplaneInfo = new ArrayList<InformationOutput>();
 	private Airplane currentAirplane;
 	
@@ -48,11 +50,21 @@ public class AirportFacadeBean {
 		al = facade.getAirlines();
 		
 		if(al.size()==0) {
+			//Runways anlegen
+			//facade.createRunways();
+			//ParkingPositions anlegen
+			//facade.createParkpositions();
+			
+			//Airlines anlegen
 			facade.createAirline("Lufthansa", "Geb.Wright-Weg 3", "Lufthausen");
 			facade.createAirline("Germanwings", "Antonow-Straﬂe 7", "Airplane City");
+			
+			//Flugzeuge anlegen
 			al = facade.getAirlines();
 			facade.createAirplane("AER788", String.valueOf(al.get(0).getId()));
 			facade.createAirplane("4U-338", String.valueOf(al.get(1).getId()));
+			
+			
 		}
 		
 	}
@@ -206,9 +218,35 @@ public class AirportFacadeBean {
 		//List<String>
 	}*/
 	
+	
+	
 	public String getAirline() {
 		return airline;
 	}
+
+	public String getDirection() {
+		return direction;
+	}
+
+
+
+	public void setDirection(String direction) {
+		this.direction = direction;
+	}
+
+
+
+	public String getRunway() {
+		return runway;
+	}
+
+
+
+	public void setRunway(String runway) {
+		this.runway = runway;
+	}
+
+
 
 	public void setAirline(String airline) {
 		this.airline = airline;
