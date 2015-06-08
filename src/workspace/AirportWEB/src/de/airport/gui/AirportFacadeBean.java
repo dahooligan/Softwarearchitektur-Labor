@@ -10,6 +10,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.RequestScoped;
+import javax.faces.component.html.HtmlOutputText;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
@@ -28,6 +29,7 @@ import de.airport.ejb.model.StartingDirection;
 public class AirportFacadeBean {
 	
 	private Boolean renderAirlines;
+	private HtmlOutputText logText;
 	private String name;
 	private String fname;
 	private String streetName;
@@ -53,6 +55,9 @@ public class AirportFacadeBean {
 		al = facade.getAirlines();
 		
 		if(al.size()==0) {
+			//Initialer Logtext
+			logText.setValue("Keine Aktivitäten vorhanden.");
+			
 			//Controller holen
 			controller = StartAirplaneController.getInstance();
 			
@@ -104,6 +109,30 @@ public class AirportFacadeBean {
 
 	public void setAirplaneInfo(List<InformationOutput> airplaneInfo) {
 		this.airplaneInfo = airplaneInfo;
+	}
+
+	
+
+	public HtmlOutputText getLogText() {
+		return logText;
+	}
+
+
+
+	public void setLogText(HtmlOutputText logText) {
+		this.logText = logText;
+	}
+
+
+
+	public StartAirplaneController getController() {
+		return controller;
+	}
+
+
+
+	public void setController(StartAirplaneController controller) {
+		this.controller = controller;
 	}
 
 
@@ -330,11 +359,15 @@ public class AirportFacadeBean {
 			ControllerState cs = controller.initiateStart(ap, runw, 14, 16, dir, false);
 			
 			switch(cs) {
-			case AirplaneNotAvailable: System.err.println("InitiateStart failed: Airplane not found."); break;
+			case AirplaneNotAvailable: 
+				System.err.println("InitiateStart failed: Airplane not found."); break;
 			case DirectionForbidden: System.err.println("InitiateStart failed: Forbidden Direction."); break;
 			case RunwayOccupied: System.err.println("InitiateStart failed: Runway is occupied."); break;
 			case StartingTimeError: System.err.println("InitiateStart failed: Invalid Startingtime."); break;
-			default: System.err.println("Airplane started"); break;
+			default: 
+				System.err.println("Airplane started"); 
+				logText.setValue("started ap");
+				break;
 			}
 		}	
 	}
