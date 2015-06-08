@@ -6,76 +6,76 @@
 
 <ui:composition template="templates/default.xhtml">
 
-	<ui:define name="content">
+	<ui:define id="1" name="content">
 
 		<p:layout id="mainLayout" style="min-width:600px;min-height:500px; height:550px;">
-			<p:layoutUnit position="north">
-				<h:outputText class="leisteObenOuttext"
+			<p:layoutUnit id="2" position="north">
+				<h:outputText id="3" class="leisteObenOuttext"
 					value="Angemeldet als: Max Mustermann" />
-				<h:outputText class="leisteObenOuttext" value="Berechtigung Lotse" />
-				<h:outputText class="leisteObenOuttext"
+				<h:outputText id="4" class="leisteObenOuttext" value="Berechtigung Lotse" />
+				<h:outputText id="5" class="leisteObenOuttext"
 					value="Sitzungsbeginn: 14.05.2015, 12:00:00" />
-				<h:outputText class="leisteObenOuttext"
+				<h:outputText  class="leisteObenOuttext"
 					value="Aktuelle Zeit: 15.05.2015, 15:00:00"
 					id="leisteObenOuttextLast" />
 			</p:layoutUnit>
-			<p:layoutUnit position="west" resizable="true">
+			<p:layoutUnit id="6" position="west" resizable="true">
 				<h:form id="wetterPanel">
-				<p:remoteCommand name="onload" action="#{airportFacadeBean.init}" autoRun="true" />
-					<p:graphicImage
+				<p:remoteCommand id="7" name="onload" action="#{airportFacadeBean.init}" autoRun="true" />
+					<p:graphicImage id="8"
 						value="http://www.itopnews.de/wp-content/uploads/2013/02/Wetter-Magie-Icon.png"
 						width="50" height="50" />
-					<h:outputText value="Sonne 23°" class="wetter" />
+					<h:outputText id="9" value="Sonne 23°" class="wetter" />
 					<br />
 					<br />
 					<br />
-					<p:graphicImage value="http://www.mavinci.de/images/icon4.png"
+					<p:graphicImage id="10" value="http://www.mavinci.de/images/icon4.png"
 						width="50" height="50" />
-					<h:outputText value="Windstärke 10m/s" class="wetter" />
+					<h:outputText id="11" value="Windstärke 10m/s" class="wetter" />
 					<br />
 					<br />
 					<br />
-					<p:graphicImage
+					<p:graphicImage id="12"
 						value="http://www.ecophon.com/globalassets/old-structure/imported-files-20140814/fodoc/0b40cd61-9e2d-4cbd-800c-2b91cb959097.jpg?PrintFile=Influence_of_climate_c_125.gif"
 						width="50" height="50" />
-					<h:outputText value="Luftfeuchte 10%" class="wetter" />
+					<h:outputText id="13" value="Luftfeuchte 10%" class="wetter" />
 					<br />
 					<br />
 					<br />
-					<p:graphicImage value="http://weather.stage21.de/img/icon/10d.png"
+					<p:graphicImage id="14" value="http://weather.stage21.de/img/icon/10d.png"
 						width="50" height="50" />
-					<h:outputText value="Wahrscheinlichkeit 20%" class="wetter" />
+					<h:outputText id="15" value="Wahrscheinlichkeit 20%" class="wetter" />
 				</h:form>
 			</p:layoutUnit>
 
-			<p:layoutUnit position="center" style=" hight:auto; width:auto;">
+			<p:layoutUnit id="16" position="center" style=" hight:auto; width:auto;">
 				<h:form id="animation">
-					<p:graphicImage
+					<p:graphicImage id="18"
 						value="https://openclipart.org/image/2400px/svg_to_png/203378/Boeing-767.png"
 						width="350" height="300" />
 				</h:form>
 				<h:form id="parkbox">
 
-					<h:outputLabel class="parkboxen" value="Parkbox 0" />
-					<h:outputLabel class="parkboxen" value="Parkbox 1" />
-					<h:outputLabel class="parkboxen" value="Parkbox 2 " />
-					<h:outputLabel class="parkboxen" value="Parkbox 3" />
+					<h:outputLabel id="19" class="parkboxen" value="Parkbox 0" />
+					<h:outputLabel id="20" class="parkboxen" value="Parkbox 1" />
+					<h:outputLabel id="21" class="pfarkboxen" value="Parkbox 2 " />
+					<h:outputLabel id="22" class="parkboxen" value="Parkbox 3" />
 
 				</h:form>
 			</p:layoutUnit>
-			<p:layoutUnit id="controlPanel" position="east" styleClass="eastContent">
+			<p:layoutUnit  id="controlPanel" position="east" styleClass="eastContent">
 				<p:tabView id="tv" orientation="top" styleClass="ui-tabs-vertical">
 
-					<p:tab title="Start&#10;durchführen">
+					<p:tab id="23" title="Start&#10;durchführen">
 					<h:form id="form1">
-						<h:outputText value="Zu startendes Flugzeug:" />
+						<h:outputText id="25" value="Zu startendes Flugzeug:" />
 						<br />
 						<h:selectOneMenu id="planeStartDropdown" class="dropdown" value="#{airportFacadeBean.airplane}" update="tv" >
 						<!-- onChange="#{airportFacadeBead.airplaneSelectionChanged}" -->
     						
     						<p:ajax listener="#{airportFacadeBean.airplaneSelectionChanged}" render="tv"/>
     						
-    						<f:selectItems value="#{airportFacadeBean.airplaneItems}" />
+    						<f:selectItems id="26" value="#{airportFacadeBean.airplaneItems}" />
     						<!--  
     						<f:selectItem itemLabel="1" itemValue="1" />
     						<f:selectItem itemLabel="a" itemValue="b" />
@@ -88,47 +88,47 @@
 						</select> -->
 						<br />
 						<br />
-						<h:outputText value="Flugzeugstatus: " />
+						<h:outputText id="27" value="Flugzeugstatus: " />
 						<br />
-						<p:dataTable var="info" value="#{airportFacadeBean.airplaneInfo}" id="outtable1">
+						<p:dataTable  var="info" value="#{airportFacadeBean.airplaneInfo}" id="outtable1">
 							<!-- selectionMode="single"
 							disabled="false" rowKey=""> -->
-							<p:column>
-								<f:facet name="header"> Attribut </f:facet>
+							<p:column id="29">
+								<f:facet id="30" name="header"> Attribut </f:facet>
 									#{info.key}
 							</p:column>
-							<p:column>
-								<f:facet name="header"> Wert </f:facet>
+							<p:column id="31">
+								<f:facet id="32" name="header"> Wert </f:facet>
 								#{info.value}
 							</p:column>
 						
 						</p:dataTable>
 						<br />
 						<br />
-						<h:outputText value="Startbahn:" />
+						<h:outputText id="33" value="Startbahn:" />
 						<br />
 						<select id="startbahnDropdown" class="dropdown" name="">
-							<option value="0">Startbahn1</option>
-							<option value="1">Startbahn2</option>
-							<option value="2">Startbahn3</option>
+							<option id="34" value="0">Startbahn1</option>
+							<option id="35" value="1">Startbahn2</option>
+							<option id="36" value="2">Startbahn3</option>
 						</select>
 						<br />
 						<br />
-						<h:outputText value="Soll-Startzeit: Timepicker implem..." />
+						<h:outputText id="37" value="Soll-Startzeit: Timepicker implem..." />
 						<br />
 						<br />
 
-						<p:commandButton value="Start anfordern" />
+						<p:commandButton id="38" value="Start anfordern" />
 					</h:form>
 					</p:tab>
 					<p:tab id="fzanlegen" title="Flugzeug&#10;anlegen" update="airlineDropdown">
 						
-						<h:form>
-						<h:outputText value="Flugzeugname: " />
+						<h:form id="39">
+						<h:outputText id="40" value="Flugzeugname: " />
 						<br />
-						<h:inputText value="#{airportFacadeBean.fname}" />
+						<h:inputText id="41" value="#{airportFacadeBean.fname}" />
 						<br />
-						<h:outputText value="Airline: " />
+						<h:outputText id="42" value="Airline: " />
 						<br />
 						<!-- 
 						<select id="airlineDropdown" class="dropdown" name="">
@@ -143,52 +143,52 @@
 						</h:selectOneMenu> 
 						-->
 						<h:selectOneMenu id="airlineDropdown" value="#{airportFacadeBean.airline}">
-    						<f:selectItems value="#{airportFacadeBean.airlineItems}" />
+    						<f:selectItems id="43" value="#{airportFacadeBean.airlineItems}" />
 						</h:selectOneMenu> 
 						<br />
 						<br />
 
-						<p:commandButton value="Anlegen" action="#{airportFacadeBean.createAirplane}" update="airplanes" /> 
+						<p:commandButton id="44" value="Anlegen" action="#{airportFacadeBean.createAirplane}" update="airplanes" /> 
 						<br />
 						<br />
-						<h:outputText value="Im System vorhandene Flugzeuge:" />
+						<h:outputText id="45" value="Im System vorhandene Flugzeuge:" />
 						<br />
 						<!-- 
 						<p:scrollPanel id="outputArea1">
 							<h:outputText class="outputArea1Text" value="AER111- Germanwings" />
 						</p:scrollPanel>
 						-->
-						<p:dataTable id="airplanes" var="aps" value="#{airportFacadeBean.airplanes}" >
+						<p:dataTable  id="airplanes" var="aps" value="#{airportFacadeBean.airplanes}" >
 						<!--  id="outtable2" 
 							
 							disabled="false"> -->
 <!-- selectionMode="single" rowKey = "" -->
-							<p:column>
-								<f:facet name="header"> Name </f:facet>
+							<p:column id="47">
+								<f:facet id="48" name="header"> Name </f:facet>
 									#{aps.name}
 							</p:column>
-							<p:column>
-								<f:facet name="header"> Airline </f:facet>
+							<p:column id="49">
+								<f:facet id="50" name="header"> Airline </f:facet>
 									#{aps.airlineName}
 							</p:column>							
 						</p:dataTable>
 						</h:form>
 					</p:tab>
-					<p:tab id="createAirline" title="Airline&#10;anlegen">
-					<h:form>
-						<h:outputText value="Airlinename: " />
+					<p:tab  id="createAirline" title="Airline&#10;anlegen">
+					<h:form id="51">
+						<h:outputText id="52" value="Airlinename: " />
 						<br />
 						<h:inputText id="name" value="#{airportFacadeBean.name}" />
 						<br />
-						<h:outputText value="Straße: " />
+						<h:outputText id="53" value="Straße: " />
 						<br />
 						<h:inputText id="street" value="#{airportFacadeBean.streetName}" />
 						<br />
-						<h:outputText value="Stadt: " />
+						<h:outputText id="54" value="Stadt: " />
 						<br />
 						<h:inputText id="city" value="#{airportFacadeBean.cityName}" />
 						<br /><br />
-						<p:commandButton value="Anlegen" action="#{airportFacadeBean.createAirline}" update="airlines" />
+						<p:commandButton id="55" value="Anlegen" action="#{airportFacadeBean.createAirline}" update="airlines" />
 						<br />
 					
 
@@ -198,16 +198,16 @@
 							
 							disabled="false"> -->
 <!-- selectionMode="single" rowKey = "" -->
-							<p:column>
-								<f:facet name="header"> Name </f:facet>
+							<p:column id="56">
+								<f:facet id="57" name="header"> Name </f:facet>
 									#{alns.name}
 							</p:column>
-							<p:column>
-								<f:facet name="header"> Straße </f:facet>
+							<p:column id="58">
+								<f:facet id="59" name="header"> Straße </f:facet>
 									#{alns.streetName}
 							</p:column>
-							<p:column>
-								<f:facet name="header"> Stadt </f:facet>
+							<p:column id="60">
+								<f:facet id="61" name="header"> Stadt </f:facet>
 									#{alns.cityName}
 							</p:column>
 							
@@ -217,9 +217,9 @@
 
 				</p:tabView>
 			</p:layoutUnit>
-			<p:layoutUnit position="south" style="height:10em;">
+			<p:layoutUnit id="62" position="south" style="height:10em;">
 				<!-- Hier kommt output (benutze value für ausgaben) -->
-				<h:outputText value="Aktivität I" />
+				<h:outputText id="63" value="Aktivität I" />
 			</p:layoutUnit>
 		</p:layout>
 
