@@ -10,6 +10,8 @@ import javax.persistence.FetchType;
 
 @javax.persistence.Entity(name = "runway")
 public class Runway {
+	
+	private volatile static int inc = 5;
 
 	@javax.persistence.Id
 	private int id;
@@ -21,14 +23,10 @@ public class Runway {
 	private Collection<StartingDirection> permittedStartingDirections;
 
 	public Runway() {
-		// this method is intentionally left blank.
-	}
-
-	public Runway() {
 		super ();
 		this.permittedStartingDirections = new ArrayList<StartingDirection>();
 		this.isFree = true;
-		this.id = 9;
+		this.id = inc++;
 	}
 	
 	public Runway(int id) {

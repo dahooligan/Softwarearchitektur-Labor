@@ -7,19 +7,12 @@ import javax.persistence.GeneratedValue;
 public class ParkingPosition {
 	@javax.persistence.Id
 	@GeneratedValue
-	private final int id;
+	private int id;
 	
 	private boolean isFree;
 	
 	public ParkingPosition() {
 		super();
-		this.id = 9;
-		this.isFree = true;
-	}
-	
-	public ParkingPosition(int id) {
-		super();
-		this.id = id;
 		this.isFree = true;
 	}
 

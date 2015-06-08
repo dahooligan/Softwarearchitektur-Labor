@@ -2,7 +2,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
 
 <ui:composition template="templates/default.xhtml">
 
@@ -119,8 +120,13 @@
 							<f:selectItem itemValue="WE" itemLabel="West -> East" />
 						</h:selectOneMenu>
 						<br />
+						
+						<h:outputText value="Soll-Startzeit:" />
 						<br />
-						<h:outputText value="Soll-Startzeit: Timepicker implem..." />
+						<p:spinner value="#{airportFacadeBean.startingHour}" min="0" max="23" size="3" />
+						:
+						<p:spinner value="#{airportFacadeBean.startingMin}" min="0" max="59" size="3" />
+					
 						<br />
 						<br />
 

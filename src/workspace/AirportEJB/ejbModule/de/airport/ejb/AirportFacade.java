@@ -123,9 +123,9 @@ public class AirportFacade {
 	public void createParkpositions() {
 		// TODO Auto-generated method stub
 		for(int i = 0; i<4; i++) {
-			ParkingPosition tmp = new ParkingPosition(i);
-			tmp.setFree(true);
-			//em.persist(tmp);
+			ParkingPosition tmp = new ParkingPosition();
+			//tmp.setFree(true);
+			em.persist(tmp);
 		}
 	}
 }
