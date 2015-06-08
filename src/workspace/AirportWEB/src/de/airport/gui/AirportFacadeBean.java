@@ -16,9 +16,12 @@ import javax.faces.model.SelectItem;
 import org.primefaces.context.RequestContext;
 
 import de.airport.ejb.AirportFacade;
+import de.airport.ejb.controller.ControllerState;
 import de.airport.ejb.controller.StartAirplaneController;
 import de.airport.ejb.model.Airline;
 import de.airport.ejb.model.Airplane;
+import de.airport.ejb.model.Runway;
+import de.airport.ejb.model.StartingDirection;
 
 @ManagedBean
 @SessionScoped
@@ -39,7 +42,7 @@ public class AirportFacadeBean {
 	private List<String> keys = new ArrayList<String>();
 	private List<String> values = new ArrayList<String>();	
 	//@EJB
-	//private StartAirplaneController controller;
+	private StartAirplaneController controller;
 	
 	@EJB
 	private AirportFacade facade;
@@ -50,8 +53,11 @@ public class AirportFacadeBean {
 		al = facade.getAirlines();
 		
 		if(al.size()==0) {
+			//Controller holen
+			controller = StartAirplaneController.getInstance();
+			
 			//Runways anlegen
-			//facade.createRunways();
+			facade.createRunways();
 			//ParkingPositions anlegen
 			//facade.createParkpositions();
 			
@@ -83,14 +89,14 @@ public class AirportFacadeBean {
 	
 
 	public List<InformationOutput> getAirplaneInfo() {
-		System.err.println("**************");
+		//System.Err.println("**************");
 		//List<InformationOutput> tmp = new ArrayList<InformationOutput>();
 		//airplaneInfo.add(new InformationOutput("teewurst", "1"));
 		//airplaneInfo.add(new InformationOutput("wurst", "2"));
 		for(int i=0; i<airplaneInfo.size(); i++) {
-			System.err.println(airplaneInfo.get(i).getKey() + ":" + airplaneInfo.get(i).getValue());
+			//System.Err.println(airplaneInfo.get(i).getKey() + ":" + airplaneInfo.get(i).getValue());
 		}
-		System.err.println("**************");
+		//System.Err.println("**************");
 		return airplaneInfo;
 	}
 
@@ -103,7 +109,7 @@ public class AirportFacadeBean {
 
 
 	public String getAirplane() {
-		System.err.println("++++++called get Airplane");
+		//System.Err.println("++++++called get Airplane");
 		return airplane;
 	}
 
@@ -155,7 +161,7 @@ public class AirportFacadeBean {
 	}
 
 	public void createAirline() {
-		System.err.println("AFB: Creating Airline with: " + name + " - " + streetName + " - " + cityName);
+		//System.Err.println("AFB: Creating Airline with: " + name + " - " + streetName + " - " + cityName);
 		facade.createAirline(name, streetName, cityName);
 		RequestContext.getCurrentInstance().update("airlineDropdown");
 	}
@@ -272,9 +278,9 @@ public class AirportFacadeBean {
 		
 		airplaneInfo.clear();
 		
-		System.err.println("########!!!selection Changed. Id: " + airplane);
+		//System.Err.println("########!!!selection Changed. Id: " + airplane);
 		Airplane ap = facade.getAirplaneById(airplane);
-		System.err.println("Got id: " + ap.getId() + ", name: " + ap.getName() + ", al: " + ap.getAirlineName() );
+		//System.Err.println("Got id: " + ap.getId() + ", name: " + ap.getName() + ", al: " + ap.getAirlineName() );
 		airplane = String.valueOf(ap.getId());
 		/* currentAirplane = ap;
 		keys.add("name");
@@ -286,11 +292,52 @@ public class AirportFacadeBean {
 		airplaneInfo.add(new InformationOutput("Name", ap.getName()));
 		airplaneInfo.add(new InformationOutput("Airline", ap.getAirlineName()));
 		
-		System.err.println("?!?!? AirplaneInfo.size() = " + airplaneInfo.size());
+		//System.Err.println("?!?!? AirplaneInfo.size() = " + airplaneInfo.size());
 		
 		
 	}
 	
+	public void requestStart(){
+		
+		//Parameter verarbeiten
+		StartingDirection dir = null;
+		Runway runw;
+		Boolean parametersOk=true;
+		
+		switch(direction){
+		case "EW":
+			dir = StartingDirection.EASTWEST;
+			break;
+		case "WE":
+			dir = StartingDirection.WESTEAST;
+			break;
+		default:
+			System.err.println("Failure: Unknown Startingdirection!");
+			parametersOk = false;
+			break;
+		}
+		
+		runw = facade.getRunwayById(runway);
+			
+		if(runw==null) {
+			System.err.println("Failure: Unknown Runway!");
+			parametersOk=false;
+		}
+		
+		Airplane ap = facade.getAirplaneById(airplane);
+		
+		if(parametersOk) {
+			ControllerState cs = controller.initiateStart(ap, runw, 14, 16, dir, false);
+			
+			switch(cs) {
+			case AirplaneNotAvailable: System.err.println("InitiateStart failed: Airplane not found."); break;
+			case DirectionForbidden: System.err.println("InitiateStart failed: Forbidden Direction."); break;
+			case RunwayOccupied: System.err.println("InitiateStart failed: Runway is occupied."); break;
+			case StartingTimeError: System.err.println("InitiateStart failed: Invalid Startingtime."); break;
+			default: System.err.println("Airplane started"); break;
+			}
+		}	
+	}
 	
 	/*
 	public Map<String,String> getItems() {

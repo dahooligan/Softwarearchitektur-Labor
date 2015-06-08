@@ -24,6 +24,7 @@ public class AirportFacade {
 	public void createAirplane(String name, String airline) { 
 		Airplane airplane = new Airplane(name);
 		airplane.setAirline(getAirlineById(airline));
+		airplane.setState(AirplaneState.PARKED);
 		
 		/*
 		List<ParkingPosition> pp = getParkingPositions();
@@ -36,7 +37,11 @@ public class AirportFacade {
 		}*/
 		
 		em.persist(airplane);
-		System.err.println("Airplane persistiert");
+		//System.err.println("Airplane persistiert");
+	}
+	
+	public Runway getRunwayById(String id){
+		return em.find(Runway.class, Integer.parseInt(id, 10));
 	}
 	
 	public Airline getAirlineById(String id) {
@@ -64,13 +69,13 @@ public class AirportFacade {
 		Airline airline = new Airline(name);
 		airline.setStreetName(street);
 		airline.setCityName(city);
-		System.err.println("AF: Creating Airline with: " + name + " - " + street + " - " + city);
+		//System.Err.println("AF: Creating Airline with: " + name + " - " + street + " - " + city);
 		
 		em.persist(airline);	}
 
 	public List<Airplane> getAirplanes() {
 		TypedQuery<Airplane> query = em.createQuery("select e from airplane e order by e.name", Airplane.class);
-		System.err.println("here I am");
+		//System.Err.println("here I am");
 		List<Airplane> res = query.getResultList();
 		return res;
 	}
@@ -78,7 +83,7 @@ public class AirportFacade {
 	public List<Airline> getAirlines() {
 		TypedQuery<Airline> query = em.createQuery("select e from airline e order by e.name", Airline.class);
 		
-		System.err.println("Ailines abgefragt");
+		//System.Err.println("Ailines abgefragt");
 		
 		List<Airline> res = query.getResultList();
 		/*
@@ -108,7 +113,7 @@ public class AirportFacade {
 	public void createRunways() {
 		// TODO Auto-generated method stub
 		for(int i = 0; i<3; i++) {
-			Runway tmp = new Runway(i+1);
+			Runway tmp = new Runway(i);
 			tmp.addStartingDirection(StartingDirection.EASTWEST);
 			tmp.addStartingDirection(StartingDirection.WESTEAST);
 			em.persist(tmp);
