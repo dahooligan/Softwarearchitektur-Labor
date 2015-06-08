@@ -24,6 +24,17 @@ public class AirportFacade {
 	public void createAirplane(String name, String airline) { 
 		Airplane airplane = new Airplane(name);
 		airplane.setAirline(getAirlineById(airline));
+		
+		/*
+		List<ParkingPosition> pp = getParkingPositions();
+		
+		for(ParkingPosition p : pp) {
+			if(p.isFree()) {
+				// ParkingPosition setzen! Dafür muss Model angepasst werden. => Matze
+			}
+			
+		}*/
+		
 		em.persist(airplane);
 		System.err.println("Airplane persistiert");
 	}
@@ -82,5 +93,34 @@ public class AirportFacade {
 		}
 		*/
 		return res;
+	}
+	
+	public List<ParkingPosition> getParkingPositions() {
+		TypedQuery<ParkingPosition> query = em.createQuery("select e from parkingposition e order by e.name", ParkingPosition.class);
+		
+		System.err.println("ParkingPosition abgefragt");
+		
+		List<ParkingPosition> res = query.getResultList();
+
+		return res;
+	}
+
+	public void createRunways() {
+		// TODO Auto-generated method stub
+		for(int i = 0; i<3; i++) {
+			Runway tmp = new Runway(i+1);
+			tmp.addStartingDirection(StartingDirection.EASTWEST);
+			tmp.addStartingDirection(StartingDirection.WESTEAST);
+			em.persist(tmp);
+		}
+	}
+	
+	public void createParkpositions() {
+		// TODO Auto-generated method stub
+		for(int i = 0; i<4; i++) {
+			ParkingPosition tmp = new ParkingPosition(i);
+			tmp.setFree(true);
+			//em.persist(tmp);
+		}
 	}
 }
