@@ -45,3 +45,8 @@ local.properties
 
 # microsoft locks
 ~*
+
+#fuer maria
+eclipse/*
+jboss-as-7.1.1.Final/*
+jre1.7.0.10/*

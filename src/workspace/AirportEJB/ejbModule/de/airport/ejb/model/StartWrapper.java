@@ -14,23 +14,25 @@ import de.airport.ejb.controller.simulation.StartSimulation;
  *
  */
 public class StartWrapper implements Observer {
-
-	// TODO: alle informationen zum start zusammensammeln
-
+	
+	//TODO: alle informationen zum start zusammensammeln
+	
 	private int airplaneID;
-	private String nameOfAirplane;
+	private String nameOfAirplane; 
 	private String nameOfAirline;
 	private int nrOfRunway;
 	private String plannedStartTime;
 	private String actualStartTime;
 	private volatile StartSimulation sim;
-
-	public StartWrapper() {
+	
+	
+	public StartWrapper()
+	{
 		sim = new StartSimulation();
 		sim.addObserver(this);
-
+		
 	}
-
+	
 	public int getAirplaneID() {
 		return airplaneID;
 	}
@@ -60,10 +62,10 @@ public class StartWrapper implements Observer {
 	}
 
 	public void setPlannedStartTime(Calendar startingTime) {
-
+		
 		String conversion = "";
 		conversion += startingTime.getTime().toString();
-
+		
 		this.plannedStartTime = conversion;
 	}
 
@@ -87,7 +89,10 @@ public class StartWrapper implements Observer {
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
 		System.err.println("Called! CurrentState: " + sim.getState());
-
+		
 	}
+	
+	
+	
 
 }

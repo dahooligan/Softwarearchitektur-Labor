@@ -26,7 +26,7 @@ public class StartAirplaneController {
 	public ControllerState initiateStart(Airplane airplane, Runway runway, int startingHour, int startingMin, 
 			StartingDirection direction,
 			boolean freeParkingPosition) {
-		System.err.println("Initiating-Start");
+		
 		if(runway.isFree())
 		{
 			if(airplane.getState()==AirplaneState.PARKED)
