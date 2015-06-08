@@ -42,10 +42,19 @@ public class AirportFacadeBean {
 	@EJB
 	private AirportFacade facade;
 	
-	public AirportFacadeBean()
-	{
-		keys.add("hallo");
-		values.add("welt");
+	public void init() {
+		//Testen ob Airlines vorhanden. Wenn nicht, dann wahrscheinlich erster Start.
+		List<Airline> al = new ArrayList<Airline>();
+		al = facade.getAirlines();
+		
+		if(al.size()==0) {
+			facade.createAirline("Lufthansa", "Geb.Wright-Weg 3", "Lufthausen");
+			facade.createAirline("Germanwings", "Antonow-Straﬂe 7", "Airplane City");
+			al = facade.getAirlines();
+			facade.createAirplane("AER788", String.valueOf(al.get(0).getId()));
+			facade.createAirplane("4U-338", String.valueOf(al.get(1).getId()));
+		}
+		
 	}
 	
 	
