@@ -3,10 +3,21 @@ package de.airport.ejb.model;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+@javax.persistence.Entity(name = "runway")
 public class Runway {
 
+	// TODO: ID Generieren??
+	@javax.persistence.Id
 	private final int id;
+
 	private boolean isFree;
+
+	@ElementCollection(targetClass = StartingDirection.class)
+	@Enumerated(EnumType.STRING)
 	private final Collection<StartingDirection> permittedStartingDirections;
 
 	public Runway(int id) {
