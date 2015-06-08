@@ -1,43 +1,61 @@
 package de.airport.gui;
 
 import java.beans.EventHandler;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.RequestScoped;
+import javax.faces.component.html.HtmlOutputText;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.context.RequestContext;
+import org.primefaces.extensions.event.BeforeShowEvent;
+import org.primefaces.extensions.event.CloseEvent;
+import org.primefaces.extensions.event.TimeSelectEvent;
 
 import de.airport.ejb.AirportFacade;
+import de.airport.ejb.controller.ControllerState;
 import de.airport.ejb.controller.StartAirplaneController;
 import de.airport.ejb.model.Airline;
 import de.airport.ejb.model.Airplane;
+import de.airport.ejb.model.Runway;
+import de.airport.ejb.model.StartingDirection;
 
 @ManagedBean
 @SessionScoped
 public class AirportFacadeBean {
 	
 	private Boolean renderAirlines;
+	private HtmlOutputText logText;
 	private String name;
 	private String fname;
 	private String streetName;
 	private String cityName;
 	private String airline;
 	private String airplane;
+	private String direction;
+	private String runway;
+	private int startingHour;
+	private int startingMin;
 	private List<InformationOutput> airplaneInfo = new ArrayList<InformationOutput>();
 	private Airplane currentAirplane;
 	
 	private List<String> keys = new ArrayList<String>();
 	private List<String> values = new ArrayList<String>();	
 	//@EJB
-	//private StartAirplaneController controller;
+	private StartAirplaneController controller;
 	
 	@EJB
 	private AirportFacade facade;
@@ -48,11 +66,28 @@ public class AirportFacadeBean {
 		al = facade.getAirlines();
 		
 		if(al.size()==0) {
+
+			//Initialer Logtext
+			logText.setValue("Keine Aktivit‰ten vorhanden.");
+			
+			//Controller holen
+			controller = StartAirplaneController.getInstance();
+			
+			//Runways anlegen
+			facade.createRunways();
+			//ParkingPositions anlegen
+			facade.createParkpositions();
+			
+			//Airlines anlegen
 			facade.createAirline("Lufthansa", "Geb.Wright-Weg 3", "Lufthausen");
 			facade.createAirline("Germanwings", "Antonow-Straﬂe 7", "Airplane City");
+			
+			//Flugzeuge anlegen
 			al = facade.getAirlines();
 			facade.createAirplane("AER788", String.valueOf(al.get(0).getId()));
 			facade.createAirplane("4U-338", String.valueOf(al.get(1).getId()));
+			
+			
 		}
 		
 	}
@@ -71,14 +106,14 @@ public class AirportFacadeBean {
 	
 
 	public List<InformationOutput> getAirplaneInfo() {
-		System.err.println("**************");
+		//System.Err.println("**************");
 		//List<InformationOutput> tmp = new ArrayList<InformationOutput>();
 		//airplaneInfo.add(new InformationOutput("teewurst", "1"));
 		//airplaneInfo.add(new InformationOutput("wurst", "2"));
 		for(int i=0; i<airplaneInfo.size(); i++) {
-			System.err.println(airplaneInfo.get(i).getKey() + ":" + airplaneInfo.get(i).getValue());
+			//System.Err.println(airplaneInfo.get(i).getKey() + ":" + airplaneInfo.get(i).getValue());
 		}
-		System.err.println("**************");
+		//System.Err.println("**************");
 		return airplaneInfo;
 	}
 
@@ -90,8 +125,56 @@ public class AirportFacadeBean {
 
 
 
+	public HtmlOutputText getLogText() {
+		return logText;
+	}
+
+
+
+	public int getStartingHour() {
+		return startingHour;
+	}
+
+
+
+	public void setStartingHour(int startingHour) {
+		this.startingHour = startingHour;
+	}
+
+
+
+	public int getStartingMin() {
+		return startingMin;
+	}
+
+
+
+	public void setStartingMin(int startingMin) {
+		this.startingMin = startingMin;
+	}
+
+
+
+	public void setLogText(HtmlOutputText logText) {
+		this.logText = logText;
+	}
+
+
+
+	public StartAirplaneController getController() {
+		return controller;
+	}
+
+
+
+	public void setController(StartAirplaneController controller) {
+		this.controller = controller;
+	}
+
+
+
 	public String getAirplane() {
-		System.err.println("++++++called get Airplane");
+		//System.Err.println("++++++called get Airplane");
 		return airplane;
 	}
 
@@ -143,7 +226,7 @@ public class AirportFacadeBean {
 	}
 
 	public void createAirline() {
-		System.err.println("AFB: Creating Airline with: " + name + " - " + streetName + " - " + cityName);
+		//System.Err.println("AFB: Creating Airline with: " + name + " - " + streetName + " - " + cityName);
 		facade.createAirline(name, streetName, cityName);
 		RequestContext.getCurrentInstance().update("airlineDropdown");
 	}
@@ -206,9 +289,35 @@ public class AirportFacadeBean {
 		//List<String>
 	}*/
 	
+	
+	
 	public String getAirline() {
 		return airline;
 	}
+
+	public String getDirection() {
+		return direction;
+	}
+
+
+
+	public void setDirection(String direction) {
+		this.direction = direction;
+	}
+
+
+
+	public String getRunway() {
+		return runway;
+	}
+
+
+
+	public void setRunway(String runway) {
+		this.runway = runway;
+	}
+
+
 
 	public void setAirline(String airline) {
 		this.airline = airline;
@@ -234,9 +343,9 @@ public class AirportFacadeBean {
 		
 		airplaneInfo.clear();
 		
-		System.err.println("########!!!selection Changed. Id: " + airplane);
+		//System.Err.println("########!!!selection Changed. Id: " + airplane);
 		Airplane ap = facade.getAirplaneById(airplane);
-		System.err.println("Got id: " + ap.getId() + ", name: " + ap.getName() + ", al: " + ap.getAirlineName() );
+		//System.Err.println("Got id: " + ap.getId() + ", name: " + ap.getName() + ", al: " + ap.getAirlineName() );
 		airplane = String.valueOf(ap.getId());
 		/* currentAirplane = ap;
 		keys.add("name");
@@ -248,11 +357,73 @@ public class AirportFacadeBean {
 		airplaneInfo.add(new InformationOutput("Name", ap.getName()));
 		airplaneInfo.add(new InformationOutput("Airline", ap.getAirlineName()));
 		
-		System.err.println("?!?!? AirplaneInfo.size() = " + airplaneInfo.size());
+		//System.Err.println("?!?!? AirplaneInfo.size() = " + airplaneInfo.size());
 		
 		
 	}
 	
+	public void requestStart(){
+		
+		//Parameter verarbeiten
+		StartingDirection dir = null;
+		Runway runw;
+		Boolean parametersOk=true;
+		
+		switch(direction){
+		case "EW":
+			dir = StartingDirection.EASTWEST;
+			break;
+		case "WE":
+			dir = StartingDirection.WESTEAST;
+			break;
+		default:
+			System.err.println("Failure: Unknown Startingdirection!");
+			parametersOk = false;
+			break;
+		}
+		
+		runw = facade.getRunwayById(runway);
+			
+		if(runw==null) {
+			System.err.println("Failure: Unknown Runway!");
+			parametersOk=false;
+		}
+		
+		Airplane ap = facade.getAirplaneById(airplane);
+		
+		if(parametersOk) {
+			ControllerState cs = controller.initiateStart(ap, runw, 14, 16, dir, false);
+			
+			switch(cs) {
+			case AirplaneNotAvailable: 
+				System.err.println("InitiateStart failed: Airplane not found."); 
+				logText.setValue("Flugzeug " + ap.getName() + " konnte nicht gestartet werden. Es wurde nicht im System gefunden."
+						 + "\n" + logText.getValue());
+				break;
+			case DirectionForbidden: 
+				System.err.println("InitiateStart failed: Forbidden Direction."); 
+				logText.setValue("Flugzeug " + ap.getName() + " konnte nicht gestartet werden. Es wurde eine falsche Startrichtung eingegeben."
+						 + "\n" + logText.getValue());
+				break;
+			case RunwayOccupied: 
+				System.err.println("InitiateStart failed: Runway is occupied."); 
+				logText.setValue("Flugzeug " + ap.getName() + " konnte nicht gestartet werden. Die Startbahn "
+						+ (runw.getId()+1) + "ist belegt."
+						 + "\n" + logText.getValue());
+				break;
+			case StartingTimeError: 
+				System.err.println("InitiateStart failed: Invalid Startingtime."); 
+				logText.setValue("Flugzeug " + ap.getName() + " konnte nicht gestartet werden. Die Startzeit liegt vor der aktuellen Zeit."
+						 + "\n" + logText.getValue());
+				break;
+			default: 
+				System.err.println("Airplane started"); 
+				logText.setValue("Flugzeug " + ap.getName() + " ist auf dem Weg zu Startbahn "
+						+ (runw.getId()+1) + "\n" + logText.getValue());
+				break;
+			}
+		}	
+	}
 	
 	/*
 	public Map<String,String> getItems() {
@@ -264,4 +435,8 @@ public class AirportFacadeBean {
 		   return keys;
 		} */
 	
-}
+	
+	//##############################
+	
+} 
+	
