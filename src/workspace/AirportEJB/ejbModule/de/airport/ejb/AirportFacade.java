@@ -8,11 +8,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import de.airport.ejb.controller.simulation.StartSimulation.simulationState;
 import de.airport.ejb.model.Airline;
 import de.airport.ejb.model.Airplane;
 import de.airport.ejb.model.AirplaneState;
 import de.airport.ejb.model.ParkingPosition;
 import de.airport.ejb.model.Runway;
+import de.airport.ejb.model.StartWrapper;
 import de.airport.ejb.model.StartingDirection;
 
 @Stateless
@@ -152,5 +154,35 @@ public class AirportFacade {
 		Runway rw = em.find(Runway.class, 0);
 		rw.setFree(false);
 		em.persist(rw);
+	}
+
+	public void persistStartProcess(StartWrapper startWrapper) {
+		// TODO Auto-generated method stub
+		em.persist(startWrapper);
+	}
+
+	public void setAirplaneState(String nameOfAirplane, int id, simulationState s) {
+		// TODO Auto-generated method stub
+		Airplane ap = em.find(Airplane.class, id);
+		switch(s) {
+		case GoingToRunway:
+			ap.setState(AirplaneState.STARTING);
+			break;
+		case Started:
+			ap.setState(AirplaneState.STARTING);
+			break;
+		case Starting:
+			ap.setState(AirplaneState.STARTING);
+			break;
+		case Waiting:
+			ap.setState(AirplaneState.WAITING_ON_RUNWAY);
+			break;
+		default:
+			ap.setState(AirplaneState.PARKED);
+		em.persist(ap);
+		}
+		//for(StartWrapper s:)
+		//ap.setState(state);
+		
 	}
 }

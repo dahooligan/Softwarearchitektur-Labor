@@ -103,10 +103,13 @@
 							<br />
 							<h:outputText id="ID27" value="Flugzeugstatus: " />
 							<br />
+							<!--  
 							<p:dataTable var="info" value="#{airportFacadeBean.airplaneInfo}"
 								id="outtable1">
-								<!-- selectionMode="single"
-							disabled="false" rowKey=""> -->
+								###hier wieder auskommentieren!?
+								 selectionMode="single"
+							disabled="false" rowKey="">
+							
 								<p:column id="ID29">
 									<f:facet id="ID30" name="header"> Attribut </f:facet>
 									#{info.key}
@@ -116,35 +119,35 @@
 								#{info.value}
 							</p:column>
 
-							</p:dataTable>
+							</p:dataTable>  -->
 							<br />
 							
-							<h:outputText id="ID33" value="Startbahn:" />
+							<h:outputText id="ID33" value="Startbahn:" style="#{airportFacadeBean.displayStyle}"/>
 							<br />
-							<h:selectOneMenu id="startbahnDropdown" class="dropdown" name="" value="#{airportFacadeBean.runway}">
+							<h:selectOneMenu id="startbahnDropdown" class="dropdown" name="" value="#{airportFacadeBean.runway}" style="#{airportFacadeBean.displayStyle}">
 								<f:selectItem id="ID34" itemValue="0" itemLabel="Startbahn1" />
 								<f:selectItem id="ID35" itemValue="1" itemLabel="Startbahn2" />
 								<f:selectItem id="ID36" itemValue="2" itemLabel="Startbahn3" />
 							</h:selectOneMenu>
 							<br />
-							<h:outputText value="Startrichtung:" />
+							<h:outputText value="Startrichtung:" style="#{airportFacadeBean.displayStyle}"/>
 							<br />
 							<h:selectOneMenu id="richtungsDropdown" class="dropdown" name=""
-								value="#{airportFacadeBean.direction}">
+								value="#{airportFacadeBean.direction}" style="#{airportFacadeBean.displayStyle}">
 								<f:selectItem itemValue="EW" itemLabel="East -> West" />
 								<f:selectItem itemValue="WE" itemLabel="West -> East" />
 							</h:selectOneMenu>
 							<br />
 							<br />
 							<h:outputText id="ID37"
-								value="Soll-Startzeit:"/>
+								value="Soll-Startzeit:" style="#{airportFacadeBean.displayStyle}"/>
 							<br />
-							<p:spinner value="#{airportFacadeBean.startingHour}" min="0" max = "23" size="3" /> 
-							: <p:spinner value="#{airportFacadeBean.startingMin}" min="0" max = "59" size="3" />
+							<p:spinner value="#{airportFacadeBean.startingHour}" min="0" max = "23" size="3" style="#{airportFacadeBean.displayStyle}"/> 
+							: <p:spinner value="#{airportFacadeBean.startingMin}" min="0" max = "59" size="3" style="#{airportFacadeBean.displayStyle}"/>
 							<br />
 							<br />
 
-							<p:commandButton id="ID38" value="Start anfordern"
+							<p:commandButton id="ID38" value="#{airportFacadeBean.startButtonText}"
 								action="#{airportFacadeBean.requestStart}" />
 						</h:form>
 					</p:tab>
