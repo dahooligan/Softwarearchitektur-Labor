@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.persistence.Transient;
+
 import de.airport.ejb.controller.simulation.StartSimulation;
 
 /**
@@ -13,6 +15,7 @@ import de.airport.ejb.controller.simulation.StartSimulation;
  * @author Matthias / Timo
  *
  */
+@javax.persistence.Entity(name = "startwrapper")
 public class StartWrapper implements Observer {
 	
 	//TODO: alle informationen zum start zusammensammeln
@@ -23,7 +26,9 @@ public class StartWrapper implements Observer {
 	private int nrOfRunway;
 	private String plannedStartTime;
 	private String actualStartTime;
-	private volatile StartSimulation sim;
+	
+	@Transient
+	private StartSimulation sim;
 	
 	
 	public StartWrapper()
