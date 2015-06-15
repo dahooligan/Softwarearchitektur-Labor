@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.persistence.EntityManager;
+
+import de.airport.ejb.AirportFacade;
 import de.airport.ejb.model.*;
 
 public class StartAirplaneController {
 	
+	private AirportFacade facade;
 	private static StartAirplaneController instance;
 	private ArrayList<StartWrapper> runningStartProcesses = new ArrayList<StartWrapper>();
 	
@@ -43,6 +47,9 @@ public class StartAirplaneController {
 					if(startingTime.getTimeInMillis() >	System.currentTimeMillis()) {
 						// Parameter auch ok. Jetzt wirklich starten.
 						
+						// EntitiyManager besorgen
+						//EntityManager em = AirportFacade.getEm();
+						
 						// StartWrapperObjekt anlegen
 						runningStartProcesses.add(0, new StartWrapper());
 						runningStartProcesses.get(0).setAirplaneID(airplane.getId());
@@ -53,7 +60,10 @@ public class StartAirplaneController {
 						
 						
 						// Runway blockieren + festlegen
-						runway.setFree(false);
+						facade.reserveRunway(runway.getId());
+						//runway.setFree(false);
+						//em.merge(runway);
+						
 						//airplane.setRunway(runway);
 						
 						//airplane.setStartingdirection(direction)
@@ -87,11 +97,10 @@ public class StartAirplaneController {
 		
 		return ControllerState.OK;
 	}
-	
-	public ControllerState performStart(Airplane airplane){
-		
-		airplane.startAircraft(); 
-		
-		return ControllerState.OK;
+
+	public void setFacade(AirportFacade facade) {
+		this.facade = facade;
 	}
+	
+	
 }

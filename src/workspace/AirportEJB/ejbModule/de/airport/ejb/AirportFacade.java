@@ -19,7 +19,7 @@ import de.airport.ejb.model.*;
 public class AirportFacade {
 
 	@PersistenceContext(unitName = "airport")
-	private EntityManager em;
+	private static EntityManager em;
 
 	public void createAirplane(String name, String airline) { 
 		Airplane airplane = new Airplane(name);
@@ -127,5 +127,29 @@ public class AirportFacade {
 			//tmp.setFree(true);
 			em.persist(tmp);
 		}
+	}
+
+	public static EntityManager getEm() {
+		return em;
+	}
+	
+	public boolean reserveRunway(int id){
+		Runway tmp = em.find(Runway.class, id);
+		
+		if(tmp.isFree()){
+			tmp.setFree(false);
+			em.persist(tmp);
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	
+	public void persistenceTest()
+	{
+		Runway rw = em.find(Runway.class, 0);
+		rw.setFree(false);
+		em.persist(rw);
 	}
 }

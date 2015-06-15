@@ -21,9 +21,6 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.context.RequestContext;
-import org.primefaces.extensions.event.BeforeShowEvent;
-import org.primefaces.extensions.event.CloseEvent;
-import org.primefaces.extensions.event.TimeSelectEvent;
 
 import de.airport.ejb.AirportFacade;
 import de.airport.ejb.controller.ControllerState;
@@ -72,6 +69,7 @@ public class AirportFacadeBean {
 			
 			//Controller holen
 			controller = StartAirplaneController.getInstance();
+			controller.setFacade(facade);
 			
 			//Runways anlegen
 			facade.createRunways();
@@ -353,17 +351,28 @@ public class AirportFacadeBean {
 		
 		values.add(ap.getAirlineName());
 		values.add(ap.getName()); */
-		airplaneInfo.add(new InformationOutput("ID", String.valueOf(ap.getId())));
+		//airplaneInfo.add(new InformationOutput("ID", String.valueOf(ap.getId())));
 		airplaneInfo.add(new InformationOutput("Name", ap.getName()));
 		airplaneInfo.add(new InformationOutput("Airline", ap.getAirlineName()));
-		
+		switch(ap.getState())
+		{
+		case PARKED:
+			airplaneInfo.add(new InformationOutput("Status","Parkend"));
+			airplaneInfo.add(new InformationOutput("Parkbox", "0"));
+			break;
+		case STARTING:
+			airplaneInfo.add(new InformationOutput("Status","Startvorgang eingeleitet"));
+			break;
+		}
+
 		//System.Err.println("?!?!? AirplaneInfo.size() = " + airplaneInfo.size());
-		
-		
+	
 	}
 	
 	public void requestStart(){
+		//facade.persistenceTest();
 		
+		System.err.println("Requesting Start. Schedulded Time: " + startingHour + " : " + startingMin);
 		//Parameter verarbeiten
 		StartingDirection dir = null;
 		Runway runw;
@@ -387,12 +396,12 @@ public class AirportFacadeBean {
 		if(runw==null) {
 			System.err.println("Failure: Unknown Runway!");
 			parametersOk=false;
-		}
+		} 
 		
 		Airplane ap = facade.getAirplaneById(airplane);
 		
 		if(parametersOk) {
-			ControllerState cs = controller.initiateStart(ap, runw, 14, 16, dir, false);
+			ControllerState cs = controller.initiateStart(ap, runw, startingHour, startingMin, dir, false);
 			
 			switch(cs) {
 			case AirplaneNotAvailable: 
@@ -417,7 +426,8 @@ public class AirportFacadeBean {
 						 + "\n" + logText.getValue());
 				break;
 			default: 
-				System.err.println("Airplane started"); 
+				
+				System.err.println("Airplane goes to Runway"); 
 				logText.setValue("Flugzeug " + ap.getName() + " ist auf dem Weg zu Startbahn "
 						+ (runw.getId()+1) + "\n" + logText.getValue());
 				break;
