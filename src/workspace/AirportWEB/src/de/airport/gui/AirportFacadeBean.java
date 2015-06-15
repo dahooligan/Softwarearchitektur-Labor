@@ -1,29 +1,15 @@
 package de.airport.gui;
 
-import java.beans.EventHandler;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.RequestScoped;
 import javax.faces.component.html.HtmlOutputText;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.context.RequestContext;
-import org.primefaces.extensions.event.BeforeShowEvent;
-import org.primefaces.extensions.event.CloseEvent;
-import org.primefaces.extensions.event.TimeSelectEvent;
 
 import de.airport.ejb.AirportFacade;
 import de.airport.ejb.controller.ControllerState;

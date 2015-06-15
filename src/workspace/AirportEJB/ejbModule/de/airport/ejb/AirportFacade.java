@@ -1,18 +1,19 @@
 package de.airport.ejb;
 
-import java.sql.PreparedStatement;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import de.airport.ejb.model.*;
+import de.airport.ejb.model.Airline;
+import de.airport.ejb.model.Airplane;
+import de.airport.ejb.model.AirplaneState;
+import de.airport.ejb.model.ParkingPosition;
+import de.airport.ejb.model.Runway;
+import de.airport.ejb.model.StartingDirection;
 
 @Stateless
 @LocalBean
