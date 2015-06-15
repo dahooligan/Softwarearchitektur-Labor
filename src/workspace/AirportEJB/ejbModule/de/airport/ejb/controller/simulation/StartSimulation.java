@@ -5,9 +5,11 @@ import java.util.Observer;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import de.airport.ejb.controller.DummyTask;
+
 public class StartSimulation extends Observable {
 
-	private enum simulationState {Waiting, GoingToRunway, Starting, Started};
+	public enum simulationState {Waiting, GoingToRunway, Starting, Started};
 	
 	private simulationState state;
 	private Timer simulationTimer;
@@ -42,21 +44,35 @@ public class StartSimulation extends Observable {
 		}
 	};;
 	
+	
 	public StartSimulation() {
 		// Beim Erstellen des Objektes wird das Flugzeug auf die Startbahn geschickt
 		state = simulationState.GoingToRunway;
 		simulationTimer = new Timer();
-		simulationTimer.schedule(timerAction, 15000);
+		simulationTimer.schedule(new DummyTask(timerAction), 15000); //(timerAction, 15000);
 		
 	}
 
-	public String getState() {
-		
-		return state.name();
+	public simulationState getState() {
+		return state;
+		//return state.name();
 	}
 
 	public void setState(simulationState state) {
 		this.state = state;
+	}
+	
+	public void continueSimulation() {
+		//simulationTimer.cancel();
+		//simulationTimer = new Timer();
+		simulationTimer.schedule(new DummyTask(timerAction), 15000);
+		//simulationTimer.schedule(new  , time);
+	}
+
+	public void resetTimers() {
+		// TODO Auto-generated method stub
+		simulationTimer.cancel();
+		simulationTimer.purge();
 	}
 	
 	

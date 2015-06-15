@@ -2,6 +2,8 @@ package de.airport.gui;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -21,7 +23,10 @@ import de.airport.ejb.model.StartingDirection;
 
 @ManagedBean
 @SessionScoped
-public class AirportFacadeBean {
+public class AirportFacadeBean implements Observer {
+	
+	private String displayStyle = "";
+	private String startButtonText = "Start anfordern";
 	
 	private Boolean renderAirlines;
 	private HtmlOutputText logText;
@@ -90,7 +95,25 @@ public class AirportFacadeBean {
 		this.currentAirplane = currentAirplane;
 	} */
 	
-	
+	public String getStartButtonText() {
+		return startButtonText;
+	}
+
+
+
+	public void setStartButtonText(String startButtonText) {
+		this.startButtonText = startButtonText;
+	}
+
+
+
+	public String getDisplayStyle() {
+		return displayStyle;
+	}
+
+	public void setDisplayStyle(String displayStyle) {
+		this.displayStyle = displayStyle;
+	}
 
 	public List<InformationOutput> getAirplaneInfo() {
 		//System.Err.println("**************");
@@ -103,8 +126,6 @@ public class AirportFacadeBean {
 		//System.Err.println("**************");
 		return airplaneInfo;
 	}
-
-
 
 	public void setAirplaneInfo(List<InformationOutput> airplaneInfo) {
 		this.airplaneInfo = airplaneInfo;
@@ -348,9 +369,23 @@ public class AirportFacadeBean {
 		case PARKED:
 			airplaneInfo.add(new InformationOutput("Status","Parkend"));
 			airplaneInfo.add(new InformationOutput("Parkbox", "0"));
+			displayStyle="";
+			startButtonText = "Start anfordern";
+			System.err.println("ParkedState");
+			break;
+		case WAITING_ON_RUNWAY:
+			airplaneInfo.add(new InformationOutput("Status","Wartet auf Freigabe"));
+			displayStyle="display:none";
+			startButtonText = "Start freigeben";
+
+			System.err.println("WaitingState");
 			break;
 		case STARTING:
-			airplaneInfo.add(new InformationOutput("Status","Startvorgang eingeleitet"));
+			airplaneInfo.add(new InformationOutput("Status","Started"));
+			displayStyle="display:none";
+			startButtonText = "Start abbrechen";
+
+			System.err.println("StartigState");
 			break;
 		}
 
@@ -422,6 +457,14 @@ public class AirportFacadeBean {
 				break;
 			}
 		}	
+	}
+
+
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	/*
