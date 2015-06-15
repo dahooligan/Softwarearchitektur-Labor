@@ -26,6 +26,8 @@ import de.airport.ejb.model.StartingDirection;
 public class AirportFacadeBean implements Observer {
 	
 	private String displayStyle = "";
+	private String releaseDisplayStyle = "display:none";
+	private String cancelDisplayStyle = "display:none";
 	private String startButtonText = "Start anfordern";
 	
 	private Boolean renderAirlines;
@@ -103,6 +105,30 @@ public class AirportFacadeBean implements Observer {
 
 	public void setStartButtonText(String startButtonText) {
 		this.startButtonText = startButtonText;
+	}
+
+
+
+	public String getCancelDisplayStyle() {
+		return cancelDisplayStyle;
+	}
+
+
+
+	public void setCancelDisplayStyle(String cancelDisplayStyle) {
+		this.cancelDisplayStyle = cancelDisplayStyle;
+	}
+
+
+
+	public String getReleaseDisplayStyle() {
+		return releaseDisplayStyle;
+	}
+
+
+
+	public void setReleaseDisplayStyle(String releaseDisplayStyle) {
+		this.releaseDisplayStyle = releaseDisplayStyle;
 	}
 
 
@@ -370,12 +396,16 @@ public class AirportFacadeBean implements Observer {
 			airplaneInfo.add(new InformationOutput("Status","Parkend"));
 			airplaneInfo.add(new InformationOutput("Parkbox", "0"));
 			displayStyle="";
+			releaseDisplayStyle="display:none";
+			cancelDisplayStyle="display:none";
 			startButtonText = "Start anfordern";
 			System.err.println("ParkedState");
 			break;
 		case WAITING_ON_RUNWAY:
 			airplaneInfo.add(new InformationOutput("Status","Wartet auf Freigabe"));
 			displayStyle="display:none";
+			releaseDisplayStyle="";
+			cancelDisplayStyle="";
 			startButtonText = "Start freigeben";
 
 			System.err.println("WaitingState");
@@ -383,7 +413,8 @@ public class AirportFacadeBean implements Observer {
 		case STARTING:
 			airplaneInfo.add(new InformationOutput("Status","Started"));
 			displayStyle="display:none";
-			startButtonText = "Start abbrechen";
+			releaseDisplayStyle="display:none";
+			cancelDisplayStyle="";
 
 			System.err.println("StartigState");
 			break;
@@ -459,7 +490,9 @@ public class AirportFacadeBean implements Observer {
 		}	
 	}
 
-
+	public void releaseAirplane() {
+		// Hier wird der Start freigegeben
+	}
 
 	@Override
 	public void update(Observable o, Object arg) {

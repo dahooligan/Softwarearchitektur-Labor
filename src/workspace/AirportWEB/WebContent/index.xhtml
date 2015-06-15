@@ -143,12 +143,16 @@
 								value="Soll-Startzeit:" style="#{airportFacadeBean.displayStyle}"/>
 							<br />
 							<p:spinner value="#{airportFacadeBean.startingHour}" min="0" max = "23" size="3" style="#{airportFacadeBean.displayStyle}"/> 
-							: <p:spinner value="#{airportFacadeBean.startingMin}" min="0" max = "59" size="3" style="#{airportFacadeBean.displayStyle}"/>
+							<h:outputText value=":" style="#{airportFacadeBean.displayStyle}"/> <p:spinner value="#{airportFacadeBean.startingMin}" min="0" max = "59" size="3" style="#{airportFacadeBean.displayStyle}"/>
 							<br />
 							<br />
 
-							<p:commandButton id="ID38" value="#{airportFacadeBean.startButtonText}"
-								action="#{airportFacadeBean.requestStart}" />
+							<p:commandButton id="ID38" value="Start anfordern"
+								action="#{airportFacadeBean.requestStart}" style="#{airportFacadeBean.displayStyle}" />
+							<p:commandButton id="ID381" value="Start freigeben"
+								action="#{airportFacadeBean.releaseAirplane}" style="#{airportFacadeBean.releaseDisplayStyle}" />
+							<p:commandButton id="ID382" value="Start abbrechen"
+								action="#{airportFacadeBean.releaseAirplane}" style="#{airportFacadeBean.cancelDisplayStyle}" />
 						</h:form>
 					</p:tab>
 					<p:tab id="fzanlegen" title="Flugzeug&#10;anlegen"
