@@ -3,15 +3,36 @@ package de.airport.ejb.model;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+
+@javax.persistence.Entity(name = "runway")
 public class Runway {
+	
+	private volatile static int inc = 5;
 
-	private final int id;
+	@javax.persistence.Id
+	private int id;
+
 	private boolean isFree;
-	private final Collection<StartingDirection> permittedStartingDirections;
 
+	@ElementCollection(targetClass = StartingDirection.class, fetch = FetchType.EAGER)
+	@Enumerated(EnumType.STRING)
+	private Collection<StartingDirection> permittedStartingDirections;
+
+	public Runway() {
+		super ();
+		this.permittedStartingDirections = new ArrayList<StartingDirection>();
+		this.isFree = true;
+		this.id = inc++;
+	}
+	
 	public Runway(int id) {
 		super();
 		this.permittedStartingDirections = new ArrayList<StartingDirection>();
+		this.isFree = true;
 		this.id = id;
 	}
 

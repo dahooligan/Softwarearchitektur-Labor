@@ -3,22 +3,31 @@ package de.airport.ejb.model;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.OneToMany;
 
-@javax.persistence.Entity (name="airline")
+@javax.persistence.Entity(name = "airline")
 public class Airline {
-	
-    @javax.persistence.Id
-    @javax.persistence.GeneratedValue
+
+	@javax.persistence.Id
+	@javax.persistence.GeneratedValue
 	private int id;
 	private final String name;
-	//private final Collection<Airplane> aircraftCollection;
+	@OneToMany(mappedBy = "airline")
+	private final Collection<Airplane> aircraftCollection;
 	private String cityName;
 	private String streetName;
+	
+	public Airline() {
+		super();
+		this.name = "Unknown";
+		this.aircraftCollection = new ArrayList<Airplane>();
+	}
+
 
 	public Airline(String name) {
 		super();
 		this.name = name;
-		//this.aircraftCollection = new ArrayList<Airplane>();
+		this.aircraftCollection = new ArrayList<Airplane>();
 	}
 
 	public String getCityName() {
@@ -53,13 +62,8 @@ public class Airline {
 	 *            this {@link Airline}
 	 * @return @see {@link Collection#add(Object))
 	 */
-	/*
 	public boolean addAircraft(Airplane airplane) {
 		return aircraftCollection.add(airplane);
-	}*/
+	}
 
-    
-    
-    
-    
 }
