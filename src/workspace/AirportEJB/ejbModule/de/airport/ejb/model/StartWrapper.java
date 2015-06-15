@@ -18,7 +18,9 @@ import de.airport.ejb.controller.simulation.StartSimulation;
 @javax.persistence.Entity(name = "startwrapper")
 public class StartWrapper implements Observer {
 	
-	//TODO: alle informationen zum start zusammensammeln
+	@javax.persistence.Id
+	@javax.persistence.GeneratedValue
+	private int id;
 	
 	private int airplaneID;
 	private String nameOfAirplane; 
