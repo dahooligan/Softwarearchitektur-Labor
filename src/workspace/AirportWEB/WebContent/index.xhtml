@@ -12,11 +12,11 @@
 			<p:layoutUnit position="north">
 				<h:outputText class="leisteObenOuttext"
 					value="Angemeldet als: Max Mustermann" />
-				<h:outputText class="leisteObenOuttext" value="Berechtigung Lotze" />
+				<h:outputText class="leisteObenOuttext" value="Berechtigung Lotse" />
 				<h:outputText class="leisteObenOuttext"
 					value="Sitzungsbeginn: 14.05.2015, 12:00:00" />
 				<h:outputText class="leisteObenOuttext"
-					value="Aktuelle Zeit: 15.05.2015, 15:00:00"
+					value="Aktuelle Zeit: "
 					id="leisteObenOuttextLast" />
 			</p:layoutUnit>
 			<p:layoutUnit position="west" resizable="true">
@@ -44,14 +44,16 @@
 					<p:graphicImage value="http://weather.stage21.de/img/icon/10d.png"
 						width="50" height="50" />
 					<h:outputText value="Wahrscheinlichkeit 20%" class="wetter" />
+					<br />
+					<br />
+					<br />
+					<p:commandButton value="Refresh" action="#{airportFacadeBean.showWeather}"/>
 				</h:form>
 			</p:layoutUnit>
 
 			<p:layoutUnit position="center" style=" hight:auto; width:auto;">
 				<h:form id="animation">
-					<p:graphicImage
-						value="https://openclipart.org/image/2400px/svg_to_png/203378/Boeing-767.png"
-						width="350" height="300" />
+					<p:graphicImage	value="img/FlughafenW.png"  width="400" height="300" />
 				</h:form>
 				<h:form id="parkbox">
 
@@ -105,7 +107,7 @@
 						<br />
 						<br />
 
-						<p:commandButton value="Start anfordern" />
+						bl
 					</p:tab>
 					<p:tab title="Flugzeug&#10;einlegen">
 						<h:outputText value="Flugzeugname: " />
@@ -122,7 +124,7 @@
 						<br />
 						<br />
 
-						<p:commandButton value="Anlegen" />
+						<p:commandButton value="Anlegen" action="#{airportFacadeBean.bla}"/>
 						<br />
 						<br />
 						<h:outputText value="Im System vorhandene Flugzeuge:" />
