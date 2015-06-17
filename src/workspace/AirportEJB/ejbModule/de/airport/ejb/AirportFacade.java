@@ -181,7 +181,7 @@ public class AirportFacade {
 		Airplane ap = em.find(Airplane.class, id);
 		switch(s) {
 		case GoingToRunway:
-			ap.setState(AirplaneState.STARTING);
+			ap.setState(AirplaneState.GOING_TO_RUNWAY);
 			break;
 		case Started:
 			ap.setState(AirplaneState.STARTING);
