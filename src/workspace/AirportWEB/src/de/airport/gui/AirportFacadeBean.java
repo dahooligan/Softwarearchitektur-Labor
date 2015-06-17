@@ -18,6 +18,7 @@ import de.airport.ejb.controller.ControllerState;
 import de.airport.ejb.controller.StartAirplaneController;
 import de.airport.ejb.model.Airline;
 import de.airport.ejb.model.Airplane;
+import de.airport.ejb.model.ParkingPosition;
 import de.airport.ejb.model.Runway;
 import de.airport.ejb.model.StartingDirection;
 
@@ -32,6 +33,7 @@ public class AirportFacadeBean implements Observer {
 	
 	private Boolean renderAirlines;
 	private HtmlOutputText logText;
+	
 	private String name;
 	private String fname;
 	private String streetName;
@@ -83,6 +85,8 @@ public class AirportFacadeBean implements Observer {
 			
 			
 		}
+		airplane = String.valueOf(facade.getAirplanes().get(1).getId());
+		this.airplaneSelectionChanged();
 		
 	}
 	
@@ -376,8 +380,7 @@ public class AirportFacadeBean implements Observer {
 	public void airplaneSelectionChanged() {
 		
 		airplaneInfo.clear();
-		
-		//System.Err.println("########!!!selection Changed. Id: " + airplane);
+		//System.Error.println("########!!!selection Changed. Id: " + airplane);
 		Airplane ap = facade.getAirplaneById(airplane);
 		//System.Err.println("Got id: " + ap.getId() + ", name: " + ap.getName() + ", al: " + ap.getAirlineName() );
 		airplane = String.valueOf(ap.getId());
@@ -394,7 +397,17 @@ public class AirportFacadeBean implements Observer {
 		{
 		case PARKED:
 			airplaneInfo.add(new InformationOutput("Status","Parkend"));
-			airplaneInfo.add(new InformationOutput("Parkbox", "0"));
+			List<ParkingPosition> pps = facade.getParkingPositions();
+			for (ParkingPosition p : pps) {
+				try {
+					int airplaneId = p.getAirplane().getId();
+					System.err.println("AP-ID :" + airplaneId + "; selected ID: " + ap.getId());
+					if(ap.getId() == airplaneId) {
+						airplaneInfo.add(new InformationOutput("Parkbox", String.valueOf(p.getId())));
+					}
+				} catch (NullPointerException e) { System.err.println("caught NPE");}
+			}
+				
 			displayStyle="";
 			releaseDisplayStyle="display:none";
 			cancelDisplayStyle="display:none";
@@ -421,7 +434,7 @@ public class AirportFacadeBean implements Observer {
 		}
 
 		//System.Err.println("?!?!? AirplaneInfo.size() = " + airplaneInfo.size());
-	
+		RequestContext.getCurrentInstance().update("tv:form1:outtable1");
 	}
 	
 	public void requestStart(){

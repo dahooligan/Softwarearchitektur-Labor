@@ -24,11 +24,23 @@ public class AirportFacade {
 	@PersistenceContext(unitName = "airport")
 	private static EntityManager em;
 
+	public void createAirline(String name, String street, String city) {
+	Airline airline = new Airline(name);
+	airline.setStreetName(street);
+	airline.setCityName(city);
+	//System.Err.println("AF: Creating Airline with: " + name + " - " + street + " - " + city);
+	
+	em.persist(airline);	}
+
 	public void createAirplane(String name, String airline) { 
 		Airplane airplane = new Airplane(name);
 		airplane.setAirline(getAirlineById(airline));
 		airplane.setState(AirplaneState.PARKED);
-		
+		ParkingPosition p = getFreeParkingPosition();
+		airplane.setParkingPosition(getFreeParkingPosition());
+		p.setFree(false);
+		p.setAirplane(airplane);
+		em.merge(p);
 		/*
 		List<ParkingPosition> pp = getParkingPositions();
 		
@@ -43,6 +55,25 @@ public class AirportFacade {
 		//System.err.println("Airplane persistiert");
 	}
 	
+	public void createParkpositions() {
+		// TODO Auto-generated method stub
+		for(int i = 0; i<4; i++) {
+			ParkingPosition tmp = new ParkingPosition();
+			//tmp.setFree(true);
+			em.persist(tmp);
+		}
+	}
+
+	public void createRunways() {
+		// TODO Auto-generated method stub
+		for(int i = 0; i<3; i++) {
+			Runway tmp = new Runway(i);
+			tmp.addStartingDirection(StartingDirection.EASTWEST);
+			tmp.addStartingDirection(StartingDirection.WESTEAST);
+			em.persist(tmp);
+		}
+	}
+
 	public Runway getRunwayById(String id){
 		return em.find(Runway.class, Integer.parseInt(id, 10));
 	}
@@ -68,14 +99,6 @@ public class AirportFacade {
 	}
 	
 	
-	public void createAirline(String name, String street, String city) {
-		Airline airline = new Airline(name);
-		airline.setStreetName(street);
-		airline.setCityName(city);
-		//System.Err.println("AF: Creating Airline with: " + name + " - " + street + " - " + city);
-		
-		em.persist(airline);	}
-
 	public List<Airplane> getAirplanes() {
 		TypedQuery<Airplane> query = em.createQuery("select e from airplane e order by e.name", Airplane.class);
 		//System.Err.println("here I am");
@@ -104,7 +127,7 @@ public class AirportFacade {
 	}
 	
 	public List<ParkingPosition> getParkingPositions() {
-		TypedQuery<ParkingPosition> query = em.createQuery("select e from parkingposition e order by e.name", ParkingPosition.class);
+		TypedQuery<ParkingPosition> query = em.createQuery("select e from parkingposition e order by e.id", ParkingPosition.class);
 		
 		System.err.println("ParkingPosition abgefragt");
 		
@@ -112,24 +135,16 @@ public class AirportFacade {
 
 		return res;
 	}
-
-	public void createRunways() {
-		// TODO Auto-generated method stub
-		for(int i = 0; i<3; i++) {
-			Runway tmp = new Runway(i);
-			tmp.addStartingDirection(StartingDirection.EASTWEST);
-			tmp.addStartingDirection(StartingDirection.WESTEAST);
-			em.persist(tmp);
-		}
-	}
 	
-	public void createParkpositions() {
-		// TODO Auto-generated method stub
-		for(int i = 0; i<4; i++) {
-			ParkingPosition tmp = new ParkingPosition();
-			//tmp.setFree(true);
-			em.persist(tmp);
+	public ParkingPosition getFreeParkingPosition() {
+		List<ParkingPosition> tmp = getParkingPositions();
+		
+		for(ParkingPosition p: tmp) {
+			if (p.isFree()) {
+				return p;
+			}
 		}
+		return null;
 	}
 
 	public static EntityManager getEm() {
@@ -141,7 +156,7 @@ public class AirportFacade {
 		
 		if(tmp.isFree()){
 			tmp.setFree(false);
-			em.persist(tmp);
+			em.merge(tmp);
 			return true;
 		} else {
 			return false;
@@ -153,7 +168,7 @@ public class AirportFacade {
 	{
 		Runway rw = em.find(Runway.class, 0);
 		rw.setFree(false);
-		em.persist(rw);
+		em.merge(rw);
 	}
 
 	public void persistStartProcess(StartWrapper startWrapper) {
@@ -179,7 +194,7 @@ public class AirportFacade {
 			break;
 		default:
 			ap.setState(AirplaneState.PARKED);
-		em.persist(ap);
+		em.merge(ap);
 		}
 		//for(StartWrapper s:)
 		//ap.setState(state);
