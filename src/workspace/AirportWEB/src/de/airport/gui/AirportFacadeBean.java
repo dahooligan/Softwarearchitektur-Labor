@@ -16,8 +16,10 @@ import org.primefaces.context.RequestContext;
 import de.airport.ejb.AirportFacade;
 import de.airport.ejb.controller.ControllerState;
 import de.airport.ejb.controller.StartAirplaneController;
+import de.airport.ejb.controller.simulation.StartSimulation.simulationState;
 import de.airport.ejb.model.Airline;
 import de.airport.ejb.model.Airplane;
+import de.airport.ejb.model.AirplaneState;
 import de.airport.ejb.model.ParkingPosition;
 import de.airport.ejb.model.Runway;
 import de.airport.ejb.model.StartingDirection;
@@ -431,9 +433,15 @@ public class AirportFacadeBean implements Observer {
 
 			System.err.println("StartigState");
 			break;
+		case GOING_TO_RUNWAY:
+			airplaneInfo.add(new InformationOutput("Status","Going to Runway"));
+			displayStyle="display:none";
+			releaseDisplayStyle="display:none";
+			cancelDisplayStyle="";
 		}
 
 		//System.Err.println("?!?!? AirplaneInfo.size() = " + airplaneInfo.size());
+		RequestContext.getCurrentInstance().update("tv:form1");
 		RequestContext.getCurrentInstance().update("tv:form1:outtable1");
 	}
 	
@@ -494,13 +502,21 @@ public class AirportFacadeBean implements Observer {
 						 + "\n" + logText.getValue());
 				break;
 			default: 
-				
+				facade.setAirplaneState(ap.getName(), ap.getId(), simulationState.GoingToRunway);
 				System.err.println("Airplane goes to Runway"); 
 				logText.setValue("Flugzeug " + ap.getName() + " ist auf dem Weg zu Startbahn "
 						+ (runw.getId()+1) + "\n" + logText.getValue());
+				displayStyle="display:none";
+				releaseDisplayStyle="display:none";
+				cancelDisplayStyle=""; 
 				break;
 			}
-		}	
+		}
+		
+		
+		
+		RequestContext.getCurrentInstance().update("ID62");
+		RequestContext.getCurrentInstance().update(":tv:form1");
 	}
 
 	public void releaseAirplane() {

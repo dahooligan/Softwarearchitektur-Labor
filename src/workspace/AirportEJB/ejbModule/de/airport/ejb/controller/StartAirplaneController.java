@@ -71,6 +71,7 @@ public class StartAirplaneController implements Observer {
 						//runway.setFree(false);
 						//em.merge(runway);
 						
+						
 						//airplane.setRunway(runway);
 						
 						//airplane.setStartingdirection(direction)
