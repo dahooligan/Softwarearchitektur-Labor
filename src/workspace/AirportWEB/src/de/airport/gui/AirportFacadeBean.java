@@ -19,6 +19,11 @@ import de.airport.ejb.model.Airplane;
 import de.airport.ejb.model.Runway;
 import de.airport.ejb.model.StartingDirection;
 
+import java.net.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 @ManagedBean
 @SessionScoped
 public class AirportFacadeBean {
@@ -37,6 +42,12 @@ public class AirportFacadeBean {
 	private int startingMin;
 	private List<InformationOutput> airplaneInfo = new ArrayList<InformationOutput>();
 	private Airplane currentAirplane;
+	//fuer das wetteranzeige
+		private String temperatur;
+		private String wetterStatus;
+		private String windstaerke;
+		private String luftfeuchtigkeit;
+		private String regenwahrscheinlichkeit;
 	
 	private List<String> keys = new ArrayList<String>();
 	private List<String> values = new ArrayList<String>();	
@@ -90,7 +101,36 @@ public class AirportFacadeBean {
 		this.currentAirplane = currentAirplane;
 	} */
 	
-	
+	int start = 0;
+	int end = 0;
+	public void showWeather(){
+		
+		URL weather;
+		try {
+			weather = new URL("http://www.webservicex.net/globalweather.asmx/GetWeather?CityName=Stuttgart&CountryName=Germany");
+		
+        URLConnection yc = weather.openConnection();
+        BufferedReader in = new BufferedReader(
+                                new InputStreamReader(
+                                yc.getInputStream()));
+        String inputLine;
+        in.readLine();
+        in.readLine();
+        while ((inputLine = in.readLine()) != null){ 
+        if(inputLine.matches("[CurrentWeather]+") ){
+        start = inputLine.indexOf("&gt;")+2;
+        end = inputLine.indexOf("&lt;",4)-2;
+        System.out.print("Start " + start + "Ende "+ end);
+        System.out.println(inputLine);
+    //    System.out.println(inputLine.substring(start, end));
+        	}    
+        }
+        in.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public List<InformationOutput> getAirplaneInfo() {
 		//System.Err.println("**************");
