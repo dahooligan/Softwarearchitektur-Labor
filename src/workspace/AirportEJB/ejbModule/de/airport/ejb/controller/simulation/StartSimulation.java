@@ -9,7 +9,7 @@ import de.airport.ejb.controller.DummyTask;
 
 public class StartSimulation extends Observable {
 
-	public enum simulationState {Waiting, GoingToRunway, Starting, Started};
+	public enum simulationState {Waiting, GoingToRunway, Starting, Started, ReturningToParkingPosition, Cancelled};
 	
 	private simulationState state;
 	private Timer simulationTimer;
@@ -22,25 +22,25 @@ public class StartSimulation extends Observable {
 			switch(state) {
 			case GoingToRunway:
 				state = simulationState.Waiting;
-				setChanged();
-				notifyObservers();
+				//Keine Weitere Aktion notwendig, Simulation muss vom Benutzer fortgesetzt o. abgebrochen werden
 				//simulationTimer.schedule(timerAction, 15000);
 				break;
 			case Starting:
 				state = simulationState.Started;
-				simulationTimer.schedule(timerAction, 10000);
-				setChanged();
-				notifyObservers();
+				//simulationTimer.schedule(timerAction, 10000);
 				break;
 			case Waiting:
 				state = simulationState.Starting;
-				setChanged();
-				notifyObservers();
+				break;
+			case ReturningToParkingPosition:
+				state = simulationState.Cancelled;
+				resetTimers();
 				break;
 			default:
 				break;
 			}
-			
+			setChanged();
+			notifyObservers();
 		}
 	};;
 	
@@ -50,7 +50,8 @@ public class StartSimulation extends Observable {
 		state = simulationState.GoingToRunway;
 		simulationTimer = new Timer();
 		simulationTimer.schedule(new DummyTask(timerAction), 15000); //(timerAction, 15000);
-		
+		setChanged();
+		notifyAll();
 	}
 
 	public simulationState getState() {
@@ -73,6 +74,12 @@ public class StartSimulation extends Observable {
 		// TODO Auto-generated method stub
 		simulationTimer.cancel();
 		simulationTimer.purge();
+	}
+	
+	public void cancelSimulation() {
+		resetTimers();
+		state = simulationState.ReturningToParkingPosition;
+		simulationTimer.schedule(new DummyTask(timerAction), 15000);
 	}
 	
 	

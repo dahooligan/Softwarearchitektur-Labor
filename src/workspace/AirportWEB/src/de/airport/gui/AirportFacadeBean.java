@@ -525,7 +525,7 @@ public class AirportFacadeBean implements Observer {
 	
 	public void cancelStart() {
 		// Hier wird der Start abgebrochen
-		
+		controller.cancelStart(airplane);
 		/* 	TO-DO:
 		 * 		- Sim Beenden
 		 *		- Flugzeug wieder in Parkbox
