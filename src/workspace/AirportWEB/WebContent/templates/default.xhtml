@@ -5,7 +5,9 @@
 	  xmlns:p="http://primefaces.org/ui">
 
 	<h:head>
-	<h:outputStylesheet name ="css/main.css"/>
+<!--  	<h:outputStylesheet name ="css/main.css"/>-->
+<!--  <h:outputScript name="js/bootstrap.min.js" />
+<h:outputStylesheet name="css/bootstrap.css" /> -->
 	
 		<f:facet name="first">
 			<meta http-equiv="X-UA-Compatible" content="IE=9" />
@@ -21,8 +23,9 @@ html{
 	margin-left:auto;
 	margin-right:auto;
 	height:100%;
-	background-color:white;
+	
 }
+
 .leisteObenOuttext{
 	
 	padding: 10px;
@@ -31,15 +34,25 @@ html{
 #leisteObenOuttextLast{
 border:none;
 }
+#controlPanel{
+min-width:388px;
+width: auto !important;
+
+}
 .ui-tabs-vertical{
+	
 	margin-top:-3px;
-	width:300px; 
-	height:462px;
+	margin-left:2px;
+	width: 388px !important; 
+	height:469px !important;
 	
 }
 
 .ui-layout-east{
  top:34px;
+}
+.parkboxen, .startUebersichtTable, #ID63{
+white-space: pre-wrap;
 }
 .ui-tabs.ui-tabs-top > .ui-tabs-nav li {
     border-bottom: 0;
@@ -78,19 +91,22 @@ hight:42px;
 }
 #animation{
 margin-top: 10px;
-border: 1px dotted gray;
-margin-left: 5px;
+/*border: 1px dotted gray;*/
+margin-left: 75px;
 margin-right: 5px;
 padding: 5px;
 }
 #parkbox{
  margin-top: 100px;
+ margin-left: 20px;
+ margin-right: 20px;
+
 
  }
  .parkboxen{
  margin-left: 30px;
- padding: 10px;
- border: 1px solid black;
+ padding: 5px 5px 5px 5px;
+ /*border: 1px solid black;*/
  
  }
  .wetter{
@@ -102,6 +118,7 @@ padding: 5px;
  }
  .eastContent{
  border:none;
+ width:400px;
  }
  .dropdown{
  width:150px;
@@ -114,7 +131,26 @@ padding: 5px;
  .outputArea1Text{
  padding: 5px;
  }
+#ID62{
+ overflow: auto !important; 
+ bottom: -1em !important;
+ height: 10em !important;
 
+}
+#ID8{
+ margin-top: 10px;
+}
+.panelGridnoBorder td, .panelGridnoBorder tr{
+ border: 0px none !important;
+}
+#wetterPanel{
+margin-top:20px;
+
+}
+#ID6{
+min-width: 155px;
+max-width: 265px;
+}
 /* this will affect the fonts of all PrimeFaces components */
 .ui-widget, table {
   font-family: Rockwell, 'Courier Bold', Courier, Georgia, Times, 'Times New Roman', serif;
@@ -124,7 +160,12 @@ padding: 5px;
   font-weight: 400;
   line-height: 20px;               
  }  
-           
+     
+#ID16{
+width:auto !important;
+
+} 
+
 	</style>
 	</h:body>
 </html>
