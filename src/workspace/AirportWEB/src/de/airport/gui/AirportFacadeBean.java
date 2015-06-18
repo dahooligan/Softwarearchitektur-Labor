@@ -522,6 +522,18 @@ public class AirportFacadeBean implements Observer {
 	public void releaseAirplane() {
 		// Hier wird der Start freigegeben
 	}
+	
+	public void cancelStart() {
+		// Hier wird der Start abgebrochen
+		
+		/* 	TO-DO:
+		 * 		- Sim Beenden
+		 *		- Flugzeug wieder in Parkbox
+		 *		- Runway wieder freigeben
+		 *		- Startübersicht "cancelled" eintragen
+		 *		
+		 */
+	}
 
 	@Override
 	public void update(Observable o, Object arg) {
