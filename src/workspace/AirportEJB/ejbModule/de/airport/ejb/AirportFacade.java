@@ -164,6 +164,8 @@ public class AirportFacade {
 		
 	}
 	
+	//public void freeRunway
+	
 	public void persistenceTest()
 	{
 		Runway rw = em.find(Runway.class, 0);
@@ -175,6 +177,11 @@ public class AirportFacade {
 		// TODO Auto-generated method stub
 		em.persist(startWrapper);
 	}
+	
+	public void mergeStartProcess(StartWrapper startWrapper) {
+		// TODO Auto-generated method stub
+		em.merge(startWrapper);
+	}
 
 	public void setAirplaneState(String nameOfAirplane, int id, simulationState s) {
 		// TODO Auto-generated method stub
@@ -184,13 +191,18 @@ public class AirportFacade {
 			ap.setState(AirplaneState.GOING_TO_RUNWAY);
 			break;
 		case Started:
-			ap.setState(AirplaneState.STARTING);
+			//em.remove(ap);
 			break;
 		case Starting:
 			ap.setState(AirplaneState.STARTING);
 			break;
 		case Waiting:
 			ap.setState(AirplaneState.WAITING_ON_RUNWAY);
+			break;
+		case ReturningToParkingPosition:
+			ap.setState(AirplaneState.RETURNING_TO_PARKINGPOSITION);
+		case Cancelled:
+			ap.setState(AirplaneState.PARKED);
 			break;
 		default:
 			ap.setState(AirplaneState.PARKED);
@@ -200,4 +212,6 @@ public class AirportFacade {
 		//ap.setState(state);
 		
 	}
+	
+	
 }

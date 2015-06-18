@@ -29,6 +29,7 @@ public class StartWrapper extends Observable implements Observer {
 	private int nrOfRunway;
 	private String plannedStartTime;
 	private String actualStartTime;
+	private String status;
 	
 	@Transient
 	private StartSimulation sim;
@@ -49,6 +50,14 @@ public class StartWrapper extends Observable implements Observer {
 		}
 	}
 	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public int getAirplaneID() {
 		return airplaneID;
 	}
@@ -104,6 +113,15 @@ public class StartWrapper extends Observable implements Observer {
 	public simulationState getSimulationState() {
 		return sim.getState();
 	}
+	
+	public void cancelSimulation() {
+		sim.cancelSimulation();
+	}
+
+	public void continueSimulation() {
+		// TODO Auto-generated method stub
+		sim.continueSimulation();
+	}
 
 	@Override
 	public void update(Observable o, Object arg) {
@@ -111,7 +129,7 @@ public class StartWrapper extends Observable implements Observer {
 		
 		System.err.println("Called! CurrentState: " + sim.getState());
 		//sim.resetTimers();
-		sim.continueSimulation();
+		//sim.continueSimulation();
 		this.setChanged();
 		notifyObservers();
 		

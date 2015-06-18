@@ -8,7 +8,7 @@
 
 	<ui:define id="1" name="content">
 
-		<p:layout id="mainLayout" style="height:650px">
+		<p:layout id="mainLayout" style="height:650px; width:1100px">
 			<!-- height:550px; -->
 			<p:layoutUnit id="ID2" position="north">
 				<h:outputText id="ID3" class="leisteObenOuttext"
@@ -82,9 +82,9 @@
 				
 		</p:panelGrid>
 			</p:layoutUnit>
-			<p:layoutUnit id="controlPanel" position="east" style="min-width:400px"
+			<p:layoutUnit id="controlPanel" position="east" style="min-width:450px"
 				styleClass="eastContent">
-				<p:tabView id="tv" orientation="top" styleClass="ui-tabs-vertical">
+				<p:tabView id="tv" orientation="top" styleClass="ui-tabs-vertical" style="min-width:450px">
 
 					<p:tab id="ID23" title="Start&#10;durchführen">
 						<h:form id="form1">
@@ -165,7 +165,7 @@
 							<p:commandButton id="ID381" value="Start freigeben"
 								action="#{airportFacadeBean.releaseAirplane}" style="#{airportFacadeBean.releaseDisplayStyle}" />
 							<p:commandButton id="ID382" value="Start abbrechen"
-								action="#{airportFacadeBean.releaseAirplane}" style="#{airportFacadeBean.cancelDisplayStyle}" />
+								action="#{airportFacadeBean.cancelStart}" style="#{airportFacadeBean.cancelDisplayStyle}" />
 						</h:form>
 					</p:tab>
 					<!-- Startuebersicht Tab -->

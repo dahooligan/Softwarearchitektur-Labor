@@ -9,6 +9,7 @@ import java.util.Observer;
 import javax.persistence.EntityManager;
 
 import de.airport.ejb.AirportFacade;
+import de.airport.ejb.controller.simulation.StartSimulation.simulationState;
 import de.airport.ejb.model.*;
 
 public class StartAirplaneController implements Observer {
@@ -119,5 +120,40 @@ public class StartAirplaneController implements Observer {
 		facade.setAirplaneState(sw.getNameOfAirplane(), sw.getAirplaneID(), sw.getSimulationState());
 	}
 	
+	public void releaseAirplane(String airplane) {
+		// Hier wird der Start freigegeben
+		for(StartWrapper s : runningStartProcesses) {
+			if(s.getAirplaneID()==Integer.parseInt(airplane, 10)) {
+				s.setStatus("Cancelled");
+				s.continueSimulation();
+			}
+		}
+	}
+	
+	public void cancelStart(String airplane) {
+		// Hier wird der Start abgebrochen
+		
+		for(StartWrapper s : runningStartProcesses) {
+			if(s.getAirplaneID()==Integer.parseInt(airplane, 10)) {
+				s.setStatus("Cancelled");
+				s.cancelSimulation();
+				facade.mergeStartProcess(s);
+				
+				facade.setAirplaneState(s.getNameOfAirplane(), s.getAirplaneID(), simulationState.ReturningToParkingPosition);
+			}
+		}
+		
+		
+		
+		/* 	TO-DO:
+		 * 		- Sim Beenden
+		 *		- Flugzeug wieder in Parkbox
+		 *		- Runway wieder freigeben
+		 *		- Startübersicht "cancelled" eintragen
+		 *		
+		 */
+		
+		
+	}
 	
 }

@@ -426,7 +426,7 @@ public class AirportFacadeBean implements Observer {
 			System.err.println("WaitingState");
 			break;
 		case STARTING:
-			airplaneInfo.add(new InformationOutput("Status","Started"));
+			airplaneInfo.add(new InformationOutput("Status","Startvorgang eingeleitet"));
 			displayStyle="display:none";
 			releaseDisplayStyle="display:none";
 			cancelDisplayStyle="";
@@ -442,6 +442,9 @@ public class AirportFacadeBean implements Observer {
 
 		//System.Err.println("?!?!? AirplaneInfo.size() = " + airplaneInfo.size());
 		RequestContext.getCurrentInstance().update("tv:form1");
+		RequestContext.getCurrentInstance().update("tv:form1:ID38");
+		RequestContext.getCurrentInstance().update("tv:form1:ID381");
+		RequestContext.getCurrentInstance().update("tv:form1:ID382");
 		RequestContext.getCurrentInstance().update("tv:form1:outtable1");
 	}
 	
@@ -513,14 +516,68 @@ public class AirportFacadeBean implements Observer {
 			}
 		}
 		
+		// TODO Ansicht rendern: Hier tut es komischerweise "fast". Outtable wird aktualisiert
 		
 		
-		RequestContext.getCurrentInstance().update("ID62");
+		RequestContext.getCurrentInstance().update("tv:form1");
+		RequestContext.getCurrentInstance().update("tv:form1:ID38");
+		RequestContext.getCurrentInstance().update("tv:form1:ID381");
+		RequestContext.getCurrentInstance().update("tv:form1:ID382");
+		RequestContext.getCurrentInstance().update("tv:form1:outtable1");
+	
+		
+		RequestContext.getCurrentInstance().update(":ID62");
+		RequestContext.getCurrentInstance().update(":ID63");
 		RequestContext.getCurrentInstance().update(":tv:form1");
 	}
 
 	public void releaseAirplane() {
 		// Hier wird der Start freigegeben
+		controller.releaseAirplane(airplane);
+		Airplane ap = facade.getAirplaneById(airplane);
+		logText.setValue("Start von Flugzeug " + ap.getName() + " wurde freigegeben"
+				 + "\n" + logText.getValue());
+		
+		// TODO Ansicht rendern
+		
+		//airplaneSelectionChanged();
+		/*
+		RequestContext.getCurrentInstance().update(":tv:form1");
+		RequestContext.getCurrentInstance().update(":tv:form1:ID38");
+		RequestContext.getCurrentInstance().update(":tv:form1:ID381");
+		RequestContext.getCurrentInstance().update(":tv:form1:ID382");
+		RequestContext.getCurrentInstance().update(":tv:form1:outtable1");
+		RequestContext.getCurrentInstance().update(":ID62");
+		RequestContext.getCurrentInstance().update(":ID63"); */
+		//RequestContext.getCurrentInstance().update(":tv:form1");
+	}
+	
+	public void cancelStart() {
+		// Hier wird der Start abgebrochen
+		controller.cancelStart(airplane);
+		
+		Airplane ap = facade.getAirplaneById(airplane);
+		logText.setValue("Start von Flugzeug " + ap.getName() + " wurde abgebrochen"
+				+ "\n" + logText.getValue());
+		// TODO Ansicht rendern
+		/*
+		RequestContext.getCurrentInstance().update(":ID62");
+		RequestContext.getCurrentInstance().update(":ID63");
+		RequestContext.getCurrentInstance().update(":tv:form1");
+		RequestContext.getCurrentInstance().update(":tv:form1:ID38");
+		RequestContext.getCurrentInstance().update(":tv:form1:ID381");
+		RequestContext.getCurrentInstance().update(":tv:form1:ID382");
+		RequestContext.getCurrentInstance().update(":tv:form1:outtable1"); */
+		
+		
+		//RequestContext.getCurrentInstance().update(":tv:form1");
+		/* 	TO-DO:
+		 * 		- Sim Beenden
+		 *		- Flugzeug wieder in Parkbox
+		 *		- Runway wieder freigeben
+		 *		- Startübersicht "cancelled" eintragen
+		 *		
+		 */
 	}
 
 	@Override
