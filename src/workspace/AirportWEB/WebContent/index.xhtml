@@ -24,7 +24,8 @@
 			</p:layoutUnit>
 			<p:layoutUnit id="ID6" position="west" resizable="true">
 				<h:form id="wetterPanel">
-	
+					<p:remoteCommand id="ID7" name="onload"
+						action="#{airportFacadeBean.init}" autoRun="true" update=":tv" />
 					
 					<p:graphicImage id="ID8"
 						value="http://www.itopnews.de/wp-content/uploads/2013/02/Wetter-Magie-Icon.png"
@@ -57,8 +58,7 @@
 					<br />
 					<br />
 					<h:form>
-					<p:remoteCommand id="ID7" name="onload"
-						action="#{airportFacadeBean.init}" autoRun="true" update=":tv" />
+					
 					<p:commandButton id="refreshWeather" value="Refresh"
 								action="#{airportFacadeBean.showWeather}" />
 					</h:form>
