@@ -8,8 +8,7 @@
 
 	<ui:define id="1" name="content">
 
-		<p:layout id="mainLayout"
-			style="min-width:600px;min-height:500px; height:700px">
+		<p:layout id="mainLayout" style="height:650px">
 			<!-- height:550px; -->
 			<p:layoutUnit id="ID2" position="north">
 				<h:outputText id="ID3" class="leisteObenOuttext"
@@ -53,26 +52,37 @@
 						height="50" />
 					<h:outputText id="ID15" value="Wahrscheinlichkeit 20%"
 						class="wetter" />
+					<br />
+					<br />
+					<br />
+						<p:commandButton id="refreshWeather" value="Refresh"
+								action="#{airportFacadeBean.showWeather}" />
 				</h:form>
 			</p:layoutUnit>
 
-			<p:layoutUnit id="ID16" position="center"
-				style=" hight:auto; width:auto;">
+			<p:layoutUnit id="ID16" position="center" resizable="true">
 				<h:form id="animation">
 					<p:graphicImage id="ID18"
 						value="https://openclipart.org/image/2400px/svg_to_png/203378/Boeing-767.png"
-						width="350" height="300" />
+						width="200" height="200" />
 				</h:form>
-				<h:form id="parkbox">
-
-					<h:outputLabel id="ID19" class="parkboxen" value="Parkbox 0" />
-					<h:outputLabel id="ID20" class="parkboxen" value="Parkbox 1" />
-					<h:outputLabel id="ID21" class="pfarkboxen" value="Parkbox 2 " />
-					<h:outputLabel id="ID22" class="parkboxen" value="Parkbox 3" />
-
-				</h:form>
+				<p:panelGrid id="parkbox" columns="4" rows="1">
+		<h:form>
+					<h:outputLabel id="ID19" class="parkboxen" value="Parkbox 0 &#10;#{airportFacadeBean.name}" />
+		</h:form>
+		<h:form>
+					<h:outputLabel id="ID20" class="parkboxen" value="Parkbox 1 &#10;#{airportFacadeBean.name}" />
+		</h:form>
+		<h:form>
+					<h:outputLabel id="ID21" class="parkboxen" value="Parkbox 2 &#10;Test Test TEst" />
+		</h:form>
+		<h:form>
+					<h:outputLabel id="ID22" class="parkboxen" value="Parkbox 3 &#10;Test Test TEst" />
+		</h:form>
+				
+		</p:panelGrid>
 			</p:layoutUnit>
-			<p:layoutUnit id="controlPanel" position="east"
+			<p:layoutUnit id="controlPanel" position="east" style="min-width:400px"
 				styleClass="eastContent">
 				<p:tabView id="tv" orientation="top" styleClass="ui-tabs-vertical">
 
@@ -142,17 +152,52 @@
 							<h:outputText id="ID37"
 								value="Soll-Startzeit:" style="#{airportFacadeBean.displayStyle}"/>
 							<br />
+							<p:panelGrid styleClass="panelGridnoBorder" columns="4" rows="1" cellpadding="10">
 							<p:spinner value="#{airportFacadeBean.startingHour}" min="0" max = "23" size="3" style="#{airportFacadeBean.displayStyle}"/> 
 							<h:outputText value=":" style="#{airportFacadeBean.displayStyle}"/> <p:spinner value="#{airportFacadeBean.startingMin}" min="0" max = "59" size="3" style="#{airportFacadeBean.displayStyle}"/>
+							
+							<p:commandButton id="ID38" value="Start anfordern"
+								action="#{airportFacadeBean.requestStart}" style="#{airportFacadeBean.displayStyle}" />
+							</p:panelGrid>
 							<br />
 							<br />
 
-							<p:commandButton id="ID38" value="Start anfordern"
-								action="#{airportFacadeBean.requestStart}" style="#{airportFacadeBean.displayStyle}" />
 							<p:commandButton id="ID381" value="Start freigeben"
 								action="#{airportFacadeBean.releaseAirplane}" style="#{airportFacadeBean.releaseDisplayStyle}" />
 							<p:commandButton id="ID382" value="Start abbrechen"
 								action="#{airportFacadeBean.releaseAirplane}" style="#{airportFacadeBean.cancelDisplayStyle}" />
+						</h:form>
+					</p:tab>
+					<!-- Startuebersicht Tab -->
+					<p:tab id="startUebersicht" title="Start&#10;Übersicht">
+					<br />
+				
+						<h:form id="ID80">
+							<p:dataTable id="uebersichtTable"  var=""
+							style="overflow: auto; border: 1px solid #ccc;  height: 300px"> <!-- value="" -->
+							
+								<p:column id="ID81">
+									<f:facet id="ID82" class="startUebersichtTable" name="header"> Airplane&#10;Name </f:facet>
+									
+							</p:column>
+								<p:column id="ID83">
+									<f:facet id="ID84" class="startUebersichtTable" name="header"> Airline&#10;Name </f:facet>
+								
+							</p:column>
+								<p:column id="ID85">
+									<f:facet id="ID86" class="startUebersichtTable" name="header"> Start-Nr. </f:facet>
+							
+							</p:column>
+							<p:column id="ID87">
+									<f:facet id="ID88" class="startUebersichtTable" name="header"> Soll-&#10;zeit </f:facet>
+								
+							</p:column>
+							<p:column id="ID89">
+									<f:facet id="ID90" class="startUebersichtTable" name="header"> Ist-&#10;zeit </f:facet>
+								
+							</p:column>
+								
+							</p:dataTable>
 						</h:form>
 					</p:tab>
 					<p:tab id="fzanlegen" title="Flugzeug&#10;anlegen"
@@ -196,7 +241,8 @@
 						</p:scrollPanel>
 						-->
 							<p:dataTable id="airplanes" var="aps"
-								value="#{airportFacadeBean.airplanes}">
+								value="#{airportFacadeBean.airplanes}"
+								style="overflow: auto; border: 1px solid #ccc;  height: 220px">
 								<!--  id="outtable2" 
 							
 							disabled="false"> -->
@@ -235,7 +281,8 @@
 
 							<br />
 							<p:dataTable id="airlines" var="alns"
-								value="#{airportFacadeBean.airlines}">
+								value="#{airportFacadeBean.airlines}"
+								style="overflow: auto; border: 1px solid #ccc;  height: 200px">
 								<!--  id="outtable2" 
 							
 							disabled="false"> -->
