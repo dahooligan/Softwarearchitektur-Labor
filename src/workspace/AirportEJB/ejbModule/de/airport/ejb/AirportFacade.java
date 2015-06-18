@@ -191,7 +191,7 @@ public class AirportFacade {
 			ap.setState(AirplaneState.GOING_TO_RUNWAY);
 			break;
 		case Started:
-			em.remove(ap);
+			//em.remove(ap);
 			break;
 		case Starting:
 			ap.setState(AirplaneState.STARTING);

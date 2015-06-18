@@ -120,8 +120,14 @@ public class StartAirplaneController implements Observer {
 		facade.setAirplaneState(sw.getNameOfAirplane(), sw.getAirplaneID(), sw.getSimulationState());
 	}
 	
-	public void releaseAirplane() {
+	public void releaseAirplane(String airplane) {
 		// Hier wird der Start freigegeben
+		for(StartWrapper s : runningStartProcesses) {
+			if(s.getAirplaneID()==Integer.parseInt(airplane, 10)) {
+				s.setStatus("Cancelled");
+				s.continueSimulation();
+			}
+		}
 	}
 	
 	public void cancelStart(String airplane) {
