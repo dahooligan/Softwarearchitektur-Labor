@@ -5,6 +5,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @javax.persistence.Entity(name = "airplane")
 public class Airplane {
@@ -21,8 +22,10 @@ public class Airplane {
 	@Enumerated(EnumType.STRING)
 	private StartingDirection startingdirection;
 	// private Runway runway;
-	// private ParkingPosition parkingPosition;
-
+	
+	@OneToOne(mappedBy="airplane")
+	private ParkingPosition parkingPosition;
+	
 	@Enumerated(EnumType.STRING)
 	private AirplaneState state;
 
@@ -35,6 +38,14 @@ public class Airplane {
 	public Airplane(String name) {
 		super();
 		this.name = name;
+	}
+	
+	public ParkingPosition getParkingPosition() {
+		return parkingPosition;
+	}
+
+	public void setParkingPosition(ParkingPosition parkingPosition) {
+		this.parkingPosition = parkingPosition;
 	}
 
 	public Airline getAirline() {
@@ -77,5 +88,6 @@ public class Airplane {
 	public String getName() {
 		return name;
 	}
+	
 
 }

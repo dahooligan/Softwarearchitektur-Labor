@@ -7,6 +7,7 @@ import java.util.Observer;
 import javax.persistence.Transient;
 
 import de.airport.ejb.controller.simulation.StartSimulation;
+import de.airport.ejb.controller.simulation.StartSimulation.simulationState;
 
 /**
  * Wrapper class containing information about erstwhile starts including
@@ -16,7 +17,7 @@ import de.airport.ejb.controller.simulation.StartSimulation;
  *
  */
 @javax.persistence.Entity(name = "startwrapper")
-public class StartWrapper implements Observer {
+public class StartWrapper extends Observable implements Observer {
 	
 	@javax.persistence.Id
 	@javax.persistence.GeneratedValue
@@ -35,9 +36,17 @@ public class StartWrapper implements Observer {
 	
 	public StartWrapper()
 	{
-		sim = new StartSimulation();
-		sim.addObserver(this);
+		//sim = new StartSimulation();
+		//sim.addObserver(this);
 		
+	}
+	
+	public StartWrapper(boolean userGenerated)
+	{
+		if(userGenerated) {
+			sim = new StartSimulation();
+			sim.addObserver(this);
+		}
 	}
 	
 	public int getAirplaneID() {
@@ -91,11 +100,20 @@ public class StartWrapper implements Observer {
 	public void setNrOfRunway(int nrOfRunway) {
 		this.nrOfRunway = nrOfRunway;
 	}
+	
+	public simulationState getSimulationState() {
+		return sim.getState();
+	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
+		
 		System.err.println("Called! CurrentState: " + sim.getState());
+		//sim.resetTimers();
+		sim.continueSimulation();
+		this.setChanged();
+		notifyObservers();
 		
 	}
 	

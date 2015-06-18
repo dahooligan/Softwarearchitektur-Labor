@@ -3,13 +3,15 @@ package de.airport.ejb.controller;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.persistence.EntityManager;
 
 import de.airport.ejb.AirportFacade;
 import de.airport.ejb.model.*;
 
-public class StartAirplaneController {
+public class StartAirplaneController implements Observer {
 	
 	private AirportFacade facade;
 	private static StartAirplaneController instance;
@@ -51,18 +53,24 @@ public class StartAirplaneController {
 						//EntityManager em = AirportFacade.getEm();
 						
 						// StartWrapperObjekt anlegen
-						runningStartProcesses.add(0, new StartWrapper());
+						runningStartProcesses.add(0, new StartWrapper(true));
 						runningStartProcesses.get(0).setAirplaneID(airplane.getId());
 						runningStartProcesses.get(0).setNameOfAirplane(airplane.getName());
+						runningStartProcesses.get(0).setNameOfAirline(airplane.getAirlineName());
 						//runningStartProcesses.get(0).setNameOfAirplane(airplane.getAirline());
 						runningStartProcesses.get(0).setNrOfRunway(runway.getId());
 						runningStartProcesses.get(0).setPlannedStartTime(startingTime);
+						
+						runningStartProcesses.get(0).addObserver(this);
+						
+						facade.persistStartProcess(runningStartProcesses.get(0));
 						
 						
 						// Runway blockieren + festlegen
 						facade.reserveRunway(runway.getId());
 						//runway.setFree(false);
 						//em.merge(runway);
+						
 						
 						//airplane.setRunway(runway);
 						
@@ -100,6 +108,15 @@ public class StartAirplaneController {
 
 	public void setFacade(AirportFacade facade) {
 		this.facade = facade;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		System.err.println("Controller was also notified!");
+		
+		// TODO Auto-generated method stub
+		StartWrapper sw = (StartWrapper)o;
+		facade.setAirplaneState(sw.getNameOfAirplane(), sw.getAirplaneID(), sw.getSimulationState());
 	}
 	
 	

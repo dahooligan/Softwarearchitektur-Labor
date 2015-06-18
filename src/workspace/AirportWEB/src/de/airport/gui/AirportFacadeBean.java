@@ -2,6 +2,8 @@ package de.airport.gui;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -14,22 +16,26 @@ import org.primefaces.context.RequestContext;
 import de.airport.ejb.AirportFacade;
 import de.airport.ejb.controller.ControllerState;
 import de.airport.ejb.controller.StartAirplaneController;
+import de.airport.ejb.controller.simulation.StartSimulation.simulationState;
 import de.airport.ejb.model.Airline;
 import de.airport.ejb.model.Airplane;
+import de.airport.ejb.model.AirplaneState;
+import de.airport.ejb.model.ParkingPosition;
 import de.airport.ejb.model.Runway;
 import de.airport.ejb.model.StartingDirection;
 
-import java.net.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 @ManagedBean
 @SessionScoped
-public class AirportFacadeBean {
+public class AirportFacadeBean implements Observer {
+	
+	private String displayStyle = "";
+	private String releaseDisplayStyle = "display:none";
+	private String cancelDisplayStyle = "display:none";
+	private String startButtonText = "Start anfordern";
 	
 	private Boolean renderAirlines;
 	private HtmlOutputText logText;
+	
 	private String name;
 	private String fname;
 	private String streetName;
@@ -42,12 +48,6 @@ public class AirportFacadeBean {
 	private int startingMin;
 	private List<InformationOutput> airplaneInfo = new ArrayList<InformationOutput>();
 	private Airplane currentAirplane;
-	//fuer das wetteranzeige
-		private String temperatur;
-		private String wetterStatus;
-		private String windstaerke;
-		private String luftfeuchtigkeit;
-		private String regenwahrscheinlichkeit;
 	
 	private List<String> keys = new ArrayList<String>();
 	private List<String> values = new ArrayList<String>();	
@@ -87,6 +87,8 @@ public class AirportFacadeBean {
 			
 			
 		}
+		airplane = String.valueOf(facade.getAirplanes().get(1).getId());
+		this.airplaneSelectionChanged();
 		
 	}
 	
@@ -101,35 +103,48 @@ public class AirportFacadeBean {
 		this.currentAirplane = currentAirplane;
 	} */
 	
-	int start = 0;
-	int end = 0;
-	public void showWeather(){
-		
-		URL weather;
-		try {
-			weather = new URL("http://www.webservicex.net/globalweather.asmx/GetWeather?CityName=Stuttgart&CountryName=Germany");
-		
-        URLConnection yc = weather.openConnection();
-        BufferedReader in = new BufferedReader(
-                                new InputStreamReader(
-                                yc.getInputStream()));
-        String inputLine;
-        in.readLine();
-        in.readLine();
-        while ((inputLine = in.readLine()) != null){ 
-        if(inputLine.matches("[CurrentWeather]+") ){
-        start = inputLine.indexOf("&gt;")+2;
-        end = inputLine.indexOf("&lt;",4)-2;
-        System.out.print("Start " + start + "Ende "+ end);
-        System.out.println(inputLine);
-    //    System.out.println(inputLine.substring(start, end));
-        	}    
-        }
-        in.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public String getStartButtonText() {
+		return startButtonText;
+	}
+
+
+
+	public void setStartButtonText(String startButtonText) {
+		this.startButtonText = startButtonText;
+	}
+
+
+
+	public String getCancelDisplayStyle() {
+		return cancelDisplayStyle;
+	}
+
+
+
+	public void setCancelDisplayStyle(String cancelDisplayStyle) {
+		this.cancelDisplayStyle = cancelDisplayStyle;
+	}
+
+
+
+	public String getReleaseDisplayStyle() {
+		return releaseDisplayStyle;
+	}
+
+
+
+	public void setReleaseDisplayStyle(String releaseDisplayStyle) {
+		this.releaseDisplayStyle = releaseDisplayStyle;
+	}
+
+
+
+	public String getDisplayStyle() {
+		return displayStyle;
+	}
+
+	public void setDisplayStyle(String displayStyle) {
+		this.displayStyle = displayStyle;
 	}
 
 	public List<InformationOutput> getAirplaneInfo() {
@@ -143,8 +158,6 @@ public class AirportFacadeBean {
 		//System.Err.println("**************");
 		return airplaneInfo;
 	}
-
-
 
 	public void setAirplaneInfo(List<InformationOutput> airplaneInfo) {
 		this.airplaneInfo = airplaneInfo;
@@ -369,8 +382,7 @@ public class AirportFacadeBean {
 	public void airplaneSelectionChanged() {
 		
 		airplaneInfo.clear();
-		
-		//System.Err.println("########!!!selection Changed. Id: " + airplane);
+		//System.Error.println("########!!!selection Changed. Id: " + airplane);
 		Airplane ap = facade.getAirplaneById(airplane);
 		//System.Err.println("Got id: " + ap.getId() + ", name: " + ap.getName() + ", al: " + ap.getAirlineName() );
 		airplane = String.valueOf(ap.getId());
@@ -387,15 +399,50 @@ public class AirportFacadeBean {
 		{
 		case PARKED:
 			airplaneInfo.add(new InformationOutput("Status","Parkend"));
-			airplaneInfo.add(new InformationOutput("Parkbox", "0"));
+			List<ParkingPosition> pps = facade.getParkingPositions();
+			for (ParkingPosition p : pps) {
+				try {
+					int airplaneId = p.getAirplane().getId();
+					System.err.println("AP-ID :" + airplaneId + "; selected ID: " + ap.getId());
+					if(ap.getId() == airplaneId) {
+						airplaneInfo.add(new InformationOutput("Parkbox", String.valueOf(p.getId())));
+					}
+				} catch (NullPointerException e) { System.err.println("caught NPE");}
+			}
+				
+			displayStyle="";
+			releaseDisplayStyle="display:none";
+			cancelDisplayStyle="display:none";
+			startButtonText = "Start anfordern";
+			System.err.println("ParkedState");
+			break;
+		case WAITING_ON_RUNWAY:
+			airplaneInfo.add(new InformationOutput("Status","Wartet auf Freigabe"));
+			displayStyle="display:none";
+			releaseDisplayStyle="";
+			cancelDisplayStyle="";
+			startButtonText = "Start freigeben";
+
+			System.err.println("WaitingState");
 			break;
 		case STARTING:
-			airplaneInfo.add(new InformationOutput("Status","Startvorgang eingeleitet"));
+			airplaneInfo.add(new InformationOutput("Status","Started"));
+			displayStyle="display:none";
+			releaseDisplayStyle="display:none";
+			cancelDisplayStyle="";
+
+			System.err.println("StartigState");
 			break;
+		case GOING_TO_RUNWAY:
+			airplaneInfo.add(new InformationOutput("Status","Going to Runway"));
+			displayStyle="display:none";
+			releaseDisplayStyle="display:none";
+			cancelDisplayStyle="";
 		}
 
 		//System.Err.println("?!?!? AirplaneInfo.size() = " + airplaneInfo.size());
-	
+		RequestContext.getCurrentInstance().update("tv:form1");
+		RequestContext.getCurrentInstance().update("tv:form1:outtable1");
 	}
 	
 	public void requestStart(){
@@ -455,13 +502,31 @@ public class AirportFacadeBean {
 						 + "\n" + logText.getValue());
 				break;
 			default: 
-				
+				facade.setAirplaneState(ap.getName(), ap.getId(), simulationState.GoingToRunway);
 				System.err.println("Airplane goes to Runway"); 
 				logText.setValue("Flugzeug " + ap.getName() + " ist auf dem Weg zu Startbahn "
 						+ (runw.getId()+1) + "\n" + logText.getValue());
+				displayStyle="display:none";
+				releaseDisplayStyle="display:none";
+				cancelDisplayStyle=""; 
 				break;
 			}
-		}	
+		}
+		
+		
+		
+		RequestContext.getCurrentInstance().update("ID62");
+		RequestContext.getCurrentInstance().update(":tv:form1");
+	}
+
+	public void releaseAirplane() {
+		// Hier wird der Start freigegeben
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	/*
